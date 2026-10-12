@@ -21,7 +21,8 @@ body {
   color: var(--fg);
   font: 400 16px/1.5 "Archivo", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -262,6 +263,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- Mobile: app-like shell ---------- */
 @media (max-width: 860px) {
   html { scroll-padding-top: 64px; }
+
+  /* Smoothness on phones: no blur layers, no continuous photo zoom, no font-width animation */
+  .top.is-stuck { background: rgba(10, 10, 10, .96); backdrop-filter: none; }
+  .hero__media, .hero__line { will-change: auto; }
+  .hero__media img.is-on { animation: var(--fx) .9s var(--ease) both; }
+  .row, .acc summary, .big { transition: color .25s; }
+  .acc summary:hover, .acc[open] summary { --wdth: 70; }
+  .big:hover { --wdth: 80; }
   .top { padding-block: 10px; gap: 12px; }
   .top__logo img { height: 34px; }
   .top__nav, .top__book { display: none; }
@@ -275,7 +284,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .acts__grid { display: block; }
   .row { font-size: clamp(2.3rem, 12.5vw, 3.4rem); grid-template-columns: 1fr auto; padding: .3em 0 .24em; color: var(--fg); }
   .row.is-on { --wdth: 70; }
-  .row:active, .sheet-open .row.is-on { --wdth: 96; color: var(--acc); }
+  .row:active, .sheet-open .row.is-on { color: var(--acc); }
   .row__arrow { display: none; }
 
   /* Detail panel becomes a bottom sheet */
@@ -284,8 +293,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
     max-height: 90svh; overflow-y: auto; overscroll-behavior: contain;
     padding: 0 18px calc(26px + env(safe-area-inset-bottom));
     background: #151514; border-radius: 18px 18px 0 0;
-    transform: translateY(105%);
-    transition: transform .6s var(--ease);
+    transform: translateY(105%); will-change: transform;
+    transition: transform .45s var(--ease);
   }
   .panel.is-open { transform: translateY(var(--drag, 0px)); }
   .panel.is-dragging { transition: none; }
@@ -308,7 +317,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .tabs {
     position: fixed; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 70;
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 5px;
-    background: rgba(24, 24, 23, .84); backdrop-filter: blur(18px) saturate(140%);
+    background: #181817;
     border: 1px solid var(--line); border-radius: 18px;
     transition: transform .5s var(--ease);
   }

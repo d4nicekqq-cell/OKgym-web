@@ -10,7 +10,7 @@
   const BOOK = 'https://okgym.clubspire.cz/';
 
   const ACTS = [
-    { t: 'Posilovna', f: '1. patro', img: 'fitness/vybaveni.webp',
+    { t: 'Posilovna', f: '1. patro', img: 'fitness/vybaveni.webp', m: 'gallery/fitness-vybaveni.webp',
       d: 'Klimatizovaná posilovna s kardiozónou, stroji, volnými vahami a funkční zónou. První trénink s trenérem zdarma.',
       facts: [[800, 'm²', 'plocha'], [90, '+', 'stanovišť'], [60, '', 'strojů']],
       links: [["Ceník", "#cenik-posilovna"]] },
@@ -18,7 +18,7 @@
       d: 'Profesionální ring, pytle a lapy. Thajský box, kondiční tréninky v aerobním sále a spinning.',
       facts: [[700, 'm²', 'sál'], [6, 'cm', 'tatami']],
       links: [] },
-    { t: 'Lezení', f: 'Přízemí', img: 'steny/lezecka.webp',
+    { t: 'Lezení', f: 'Přízemí', img: 'steny/lezecka.webp', m: 'steny/header.webp',
       d: 'Lezecká stěna s navijáky, boulder s Campus boardem a podsvícený MoonBoard. Půjčovna vybavení na místě.',
       facts: [[8, 'm', 'stěna'], ['3,8', 'm', 'boulder'], ['25–40', '°', 'MoonBoard']],
       links: [["Ceník", "#cenik-lezeni"]] },
@@ -26,7 +26,7 @@
       d: 'Bungee, H.E.A.T., Tabata, pilates a jóga v multifunkčním sále. Pro každý věk, bez předchozích zkušeností.',
       facts: [[5, '', 'druhů lekcí']],
       links: [["Rozvrh", "#cenik-rozvrh"], ["Ceník", "#cenik-lekce"]] },
-    { t: 'Sauny', f: 'Přízemí', img: 'sauna/finska.webp',
+    { t: 'Sauny', f: 'Přízemí', img: 'img/sauna-1400.jpg',
       d: 'Finská, bio s bylinkami a infrasauna. Ochlazení, odpočinek a až dvě hodiny klidu.',
       facts: [[90, '°C', 'finská'], [70, '°C', 'bio'], [35, 'min', 'infra']],
       links: [["Ceník", "#cenik-sauny"]] },
@@ -77,28 +77,39 @@
     lines.forEach((l) => { l.style.transition = 'none'; setW(l, 62); });
     const widest = Math.max(...lines.map(widthOf));
     if (widest > W) { fs *= W / widest; title.style.fontSize = `${fs}px`; }
-    lines.forEach((l) => { const v = fitWdth(l, W); setW(l, intro && !reduced ? 62 : v); release(l); });
-    if (intro && !reduced) {
+    // Animating the width axis re-lays out the whole title every frame: desktop only
+    const animate = intro && !reduced && !mobile.matches;
+    lines.forEach((l) => { const v = fitWdth(l, W); setW(l, animate ? 62 : v); release(l); });
+    if (animate) {
       lines.forEach((l, i) => { l.style.transitionDelay = `${250 + i * 110}ms`; setW(l, l.dataset.w); });
       setTimeout(() => lines.forEach((l) => { l.style.transitionDelay = ''; }), 2200);
     }
   };
 
-  let cur = -1, timer;
+  let cur = -1, timer, heroVisible = true;
+  const queue = () => {
+    clearTimeout(timer);
+    if (heroVisible) timer = setTimeout(() => slide((cur + 1) % slides.length), 4200);
+  };
   const slide = (i) => {
     if (i === cur) return;
     slides.forEach((im, k) => { im.classList.toggle('is-prev', k === cur); im.classList.toggle('is-on', k === i); });
     lines.forEach((l, k) => l.classList.toggle('is-on', k === i));
     cur = i;
-    clearTimeout(timer);
-    timer = setTimeout(() => slide((cur + 1) % slides.length), 4200);
+    queue();
   };
   lines.forEach((l, i) => l.addEventListener('pointerenter', () => slide(i)));
+  // Stop swapping full-screen photos once the hero is scrolled away
+  new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; queue(); }).observe(hero);
 
   /* ---------- Closing CTA (width follows scroll) ---------- */
   const book = $('#book');
   const bookFit = $('.fit', book);
-  const layoutBook = () => { fitWdth(bookFit, $('.book__line').clientWidth); bookFit.style.transition = 'color .4s'; };
+  const layoutBook = () => {
+    const v = fitWdth(bookFit, $('.book__line').clientWidth);
+    bookFit.style.transition = 'color .4s';
+    if (reduced || mobile.matches) setW(bookFit, v);
+  };
 
   /* ---------- Scroll-linked motion ---------- */
   const top = $('#topbar');
@@ -107,13 +118,15 @@
     ticking = false;
     const y = scrollY, vh = innerHeight;
     top.classList.toggle('is-stuck', y > vh * 0.6);
-    if (!reduced && y < vh) {
+    // Scroll-linked effects are desktop only: on phones they fight the browser's own scrolling
+    if (reduced || mobile.matches) return;
+    if (y < vh) {
       wraps.forEach((w, i) => { w.style.transform = `translate3d(${(i % 2 ? 1 : -1) * y * 0.14}px,0,0)`; });
       media.style.transform = `scale(${1 + (y / vh) * 0.14})`;
     }
     const r = book.getBoundingClientRect();
     if (r.top < vh && bookFit.dataset.w) {
-      const p = reduced ? 1 : Math.min(Math.max((vh - r.top) / (r.height + 80), 0), 1);
+      const p = Math.min(Math.max((vh - r.top) / (r.height + 80), 0), 1);
       setW(bookFit, 62 + (bookFit.dataset.w - 62) * p);
     }
   };
@@ -142,6 +155,8 @@
     requestAnimationFrame(step);
   };
 
+  // Local files are used as they are; everything else comes from the okgym.cz image folder
+  const srcOf = (a) => { const f = (mobile.matches && a.m) || a.img; return f.startsWith('img/') ? f : IMG + f; };
   let active = -1, flip = 0;
   const show = (i) => {
     if (i === active) return;
@@ -152,7 +167,7 @@
     const next = layers[flip], prev = layers[flip ^ 1];
     flip ^= 1;
     next.style.setProperty('--fx', FX[i % FX.length]);
-    next.src = IMG + a.img;
+    next.src = srcOf(a);
     prev.classList.remove('is-in');
     next.classList.remove('is-in');
     void next.offsetWidth;
@@ -189,8 +204,16 @@
 
   // Price lists expand in place; a "Ceník" link opens its list before the page scrolls to it
   const lists = $$('.acc');
-  lists.forEach((d) => d.addEventListener('toggle', () => {
-    if (d.open) lists.forEach((o) => { if (o !== d) o.open = false; });
+  lists.forEach((d) => $('summary', d).addEventListener('click', (e) => {
+    // Only one list stays open. Closing the others changes the page height, so keep the
+    // tapped heading exactly where it was on screen instead of letting the page jump.
+    e.preventDefault();
+    const heading = e.currentTarget;
+    const before = heading.getBoundingClientRect().top;
+    const open = !d.open;
+    lists.forEach((o) => { o.open = o === d && open; });
+    const shift = heading.getBoundingClientRect().top - before;
+    if (shift) scrollBy({ top: shift, behavior: 'instant' });
   }));
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href^="#cenik-"]');
@@ -223,8 +246,9 @@
   head.addEventListener('pointercancel', endDrag);
 
   show(0);
-  const preload = () => ACTS.forEach((a) => { new Image().src = IMG + a.img; });
-  (window.requestIdleCallback || setTimeout)(preload);
+  // Desktop swaps photos on hover, so warm them up; phones load each one only when its sheet opens
+  const preload = () => ACTS.forEach((a) => { new Image().src = srcOf(a); });
+  if (!mobile.matches) (window.requestIdleCallback || setTimeout)(preload);
 
   /* ---------- Today timeline + live status (Europe/Prague) ---------- */
   const T0 = 6 * 60, T1 = 23 * 60;
@@ -262,7 +286,12 @@
     nowLine.dataset.time = fmt(mins);
     tls.classList.toggle("has-now", mins >= T0 && mins <= T1);
   };
-  addEventListener("resize", () => { if (lastMins !== null) placeNow(lastMins); });
+  let nowWidth = innerWidth;
+  addEventListener("resize", () => {
+    if (innerWidth === nowWidth || lastMins === null) return;
+    nowWidth = innerWidth;
+    placeNow(lastMins);
+  });
   let drawnKey = null;
   const updateStatus = () => {
     const { key, mins } = pragueNow();
@@ -332,8 +361,10 @@
   (document.fonts ? document.fonts.load('900 1em Archivo').then(() => document.fonts.ready) : Promise.resolve()).then(boot);
   setTimeout(boot, 1800);
 
-  let rz;
+  let rz, lastWidth = innerWidth;
   addEventListener('resize', () => {
+    if (innerWidth === lastWidth) return;
+    lastWidth = innerWidth;
     clearTimeout(rz);
     rz = setTimeout(() => { layoutHero(false); layoutBook(); onScroll(); }, 120);
   });

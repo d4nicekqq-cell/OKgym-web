@@ -32,9 +32,9 @@
 <main>
 <section class="hero" id="top">
   <div class="hero__media" aria-hidden="true">
-    <img src="img/trenink-4k.jpg" alt="" style="--fx:fxWipe">
-    <img src="https://www.okgym.cz/images/steny/index.webp" alt="" style="--fx:fxCircle">
-    <img src="img/sauna-4k.jpg" alt="" style="--fx:fxDiag">
+    <picture><source media="(max-width: 860px)" srcset="img/trenink-1600.jpg"><img src="img/trenink-2560.jpg" alt="" decoding="async" style="--fx:fxWipe"></picture>
+    <picture><source media="(max-width: 860px)" srcset="https://www.okgym.cz/images/steny/header.webp"><img src="https://www.okgym.cz/images/steny/index.webp" alt="" decoding="async" style="--fx:fxCircle"></picture>
+    <picture><source media="(max-width: 860px)" srcset="img/sauna-1400.jpg"><img src="img/sauna-2400.jpg" alt="" decoding="async" style="--fx:fxDiag"></picture>
   </div>
 
   <h1 class="hero__title" aria-label="Trénink, adrenalin, regenerace">
@@ -60,7 +60,7 @@
         <strong id="panelTitle"></strong>
         <button class="panel__close" id="panelClose" type="button" aria-label="Zavřít">✕</button>
       </div>
-      <div class="panel__img"><img alt=""><img alt=""></div>
+      <div class="panel__img"><img alt="" decoding="async"><img alt="" decoding="async"></div>
       <div class="panel__body" id="panelBody">
         <p class="panel__desc"></p>
         <div class="panel__facts"></div>
