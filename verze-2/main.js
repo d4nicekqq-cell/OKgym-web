@@ -370,16 +370,30 @@
   const tabs = $('#tabs');
   const tabLinks = $$('a', tabs);
   new IntersectionObserver(([en]) => { if (en.isIntersecting) book.classList.add('is-in'); }, { threshold: 0.35 }).observe(book);
-  const spy = new IntersectionObserver((entries) => entries.forEach((en) => {
-    if (!en.isIntersecting) return;
-    navLinks.forEach((a) => a.classList.toggle('is-current', a.hash === `#${en.target.id}`));
+  // Current section = the last one whose top has passed the middle of the screen. Worked out
+  // from positions on every scroll frame, so it is the same in both directions and at any speed.
+  const sections = ['top', 'aktivity', 'dnes', 'ceniky', 'kontakt'].map((id) => $(`#${id}`));
+  let currentId = null, spyQueued = false;
+  const updateSpy = () => {
+    spyQueued = false;
+    const middle = innerHeight * 0.45;
+    let id = sections[0].id;
+    sections.forEach((s) => { if (s.getBoundingClientRect().top <= middle) id = s.id; });
+    // A short last section can never reach the middle of a tall screen
+    if (scrollY + innerHeight >= document.documentElement.scrollHeight - 2) id = sections[sections.length - 1].id;
+    if (id === currentId) return;
+    currentId = id;
+    navLinks.forEach((a) => a.classList.toggle('is-current', a.hash === `#${id}`));
     // Sliding highlight in the phone tab bar
-    const k = tabLinks.findIndex((a) => a.hash === `#${en.target.id}`);
+    const k = tabLinks.findIndex((a) => a.hash === `#${id}`);
     // The price lists have no tab of their own, so the bar keeps its last highlight there
-    if (k >= 0 || en.target.id === 'top') tabs.style.setProperty('--tab-on', k < 0 ? 0 : 1);
+    if (k >= 0 || id === 'top') tabs.style.setProperty('--tab-on', k < 0 ? 0 : 1);
     if (k >= 0) tabs.style.setProperty('--tab', k);
-  }), { rootMargin: '-45% 0px -50% 0px' });
-  ['top', 'aktivity', 'dnes', 'ceniky', 'kontakt'].forEach((id) => spy.observe($(`#${id}`)));
+  };
+  const queueSpy = () => { if (!spyQueued) { spyQueued = true; requestAnimationFrame(updateSpy); } };
+  addEventListener('scroll', queueSpy, { passive: true });
+  addEventListener('resize', queueSpy);
+  updateSpy();
 
   /* ---------- Boot ---------- */
   const boot = () => {
