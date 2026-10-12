@@ -375,10 +375,11 @@
     navLinks.forEach((a) => a.classList.toggle('is-current', a.hash === `#${en.target.id}`));
     // Sliding highlight in the phone tab bar
     const k = tabLinks.findIndex((a) => a.hash === `#${en.target.id}`);
-    tabs.style.setProperty('--tab-on', k < 0 ? 0 : 1);
+    // The price lists have no tab of their own, so the bar keeps its last highlight there
+    if (k >= 0 || en.target.id === 'top') tabs.style.setProperty('--tab-on', k < 0 ? 0 : 1);
     if (k >= 0) tabs.style.setProperty('--tab', k);
   }), { rootMargin: '-45% 0px -50% 0px' });
-  ['top', 'aktivity', 'dnes', 'kontakt'].forEach((id) => spy.observe($(`#${id}`)));
+  ['top', 'aktivity', 'dnes', 'ceniky', 'kontakt'].forEach((id) => spy.observe($(`#${id}`)));
 
   /* ---------- Boot ---------- */
   const boot = () => {
