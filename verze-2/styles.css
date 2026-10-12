@@ -384,3 +384,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .js .book .fit { transform: translateY(105%); }
   .js .book.is-in .fit { transform: none; }
 }
+
+/* Phone crop of the first hero photo: shift left so the head is in frame, not just the shoulder */
+@media (max-width: 860px) {
+  .hero__media picture:first-child img { object-position: 34% 50%; }
+}
