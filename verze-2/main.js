@@ -109,6 +109,7 @@
     const v = fitWdth(bookFit, $('.book__line').clientWidth);
     bookFit.style.transition = 'color .4s';
     if (reduced || mobile.matches) setW(bookFit, v);
+    if (mobile.matches) bookFit.style.transition = 'transform 1s cubic-bezier(.16, 1, .3, 1), color .4s';
   };
 
   /* ---------- Scroll-linked motion ---------- */
@@ -174,6 +175,7 @@
     next.classList.add('is-in');
 
     $('#panelTitle').textContent = a.t;
+    $('#panelCount').textContent = `${i + 1} / ${ACTS.length}`;
     $('.panel__desc', body).textContent = a.d;
     $('.panel__facts', body).innerHTML = a.facts.map(([n, u, l]) => `<div><b>${n}<u>${u}</u></b><span>${l}</span></div>`).join('');
     $('.panel__links', body).innerHTML = [...a.links, ['Rezervace', BOOK]]
@@ -198,6 +200,29 @@
     r.addEventListener('click', () => { show(i); if (mobile.matches) sheet(true); });
   });
   $('#panelClose').addEventListener('click', () => sheet(false));
+
+  // Phone sheet: step through activities with the arrows or a sideways swipe on the photo
+  const step = (d) => show((active + d + ACTS.length) % ACTS.length);
+  $('#panelPrev').addEventListener('click', () => step(-1));
+  $('#panelNext').addEventListener('click', () => step(1));
+  const onSwipe = (el, fn) => {
+    let x0 = null, startY = 0;
+    el.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
+    el.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0, dyTouch = e.changedTouches[0].clientY - startY;
+      x0 = null;
+      if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dyTouch) * 1.5) fn(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  };
+  onSwipe($('.panel__img'), step);
+  onSwipe(hero, (d) => slide((cur + d + slides.length) % slides.length));
+
+  // On phones there is no hover: the row passing the middle of the screen lights up instead
+  const near = new IntersectionObserver((entries) => entries.forEach((en) => {
+    en.target.classList.toggle('is-near', en.isIntersecting);
+  }), { rootMargin: '-49.5% 0px -49.5% 0px' });
+  rows.forEach((r) => near.observe(r));
   $('#scrim').addEventListener('click', () => sheet(false));
   addEventListener('keydown', (e) => { if (e.key === 'Escape') sheet(false); });
   mobile.addEventListener('change', () => sheet(false));
@@ -342,9 +367,16 @@
   $$('.rv').forEach((el) => reveal.observe(el));
 
   const navLinks = $$('.top__nav a, .tabs a[href^="#"]');
+  const tabs = $('#tabs');
+  const tabLinks = $$('a', tabs);
+  new IntersectionObserver(([en]) => { if (en.isIntersecting) book.classList.add('is-in'); }, { threshold: 0.35 }).observe(book);
   const spy = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (!en.isIntersecting) return;
     navLinks.forEach((a) => a.classList.toggle('is-current', a.hash === `#${en.target.id}`));
+    // Sliding highlight in the phone tab bar
+    const k = tabLinks.findIndex((a) => a.hash === `#${en.target.id}`);
+    tabs.style.setProperty('--tab-on', k < 0 ? 0 : 1);
+    if (k >= 0) tabs.style.setProperty('--tab', k);
   }), { rootMargin: '-45% 0px -50% 0px' });
   ['top', 'aktivity', 'dnes', 'kontakt'].forEach((id) => spy.observe($(`#${id}`)));
 
