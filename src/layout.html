@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{page.title}}</title>
+<meta name="description" content="{{page.description}}">
+<link rel="canonical" href="{{site.url}}{{page.path}}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="{{site.name}}">
+<meta property="og:title" content="{{page.title}}">
+<meta property="og:description" content="{{page.description}}">
+<meta property="og:url" content="{{site.url}}{{page.path}}">
+<meta property="og:image" content="{{img}}/fitness/index.webp">
+<meta name="theme-color" content="#0c0c0c">
+<link rel="icon" href="{{img}}/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#obsah">Přeskočit na obsah</a>
+
+<header class="hdr" id="hdr">
+  <div class="container hdr__in">
+    <a class="hdr__logo" href="/" aria-label="OK GYM – úvodní stránka">
+      <img src="{{img}}/logo.webp" alt="OK GYM Fitcentrum" width="181" height="86">
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Hlavní navigace">
+      <ul class="nav__list">
+        <li><a class="nav__link" data-nav="fitness" href="/fitness-centrum">Fitness</a></li>
+        <li><a class="nav__link" data-nav="lezeni" href="/lezecke-steny">Lezení</a></li>
+        <li><a class="nav__link" data-nav="lekce" href="/multifunkcni-sal">Skupinové lekce</a></li>
+        <li class="dd">
+          <button class="nav__link dd__btn" type="button" aria-expanded="false" aria-controls="dd-relax">
+            Relax a regenerace
+            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2.500 4.500 6 8l3.500-3.500" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="dd__menu" id="dd-relax">
+            <li><a data-nav="sauny" href="/sauny"><strong>Sauny</strong><span>Finská, bio a infrasauna</span></a></li>
+            <li><a data-nav="masaze" href="/masaze"><strong>Masáže</strong><span>Relaxační, sportovní i lávové kameny</span></a></li>
+            <li><a href="/fitness-centrum#solarium"><strong>Solárium</strong><span>Ergoline v 1. patře</span></a></li>
+          </ul>
+        </li>
+        <li><a class="nav__link" data-nav="cenik" href="/cenik">Ceník</a></li>
+        <li><a class="nav__link" data-nav="kontakt" href="/kontakt">Kontakt</a></li>
+      </ul>
+      <div class="nav__foot">
+        <a href="tel:{{phone.patro.tel}}"><strong>{{phone.patro.display}}</strong><span>{{phone.patro.what}}</span></a>
+        <a href="tel:{{phone.prizemi.tel}}"><strong>{{phone.prizemi.display}}</strong><span>{{phone.prizemi.what}}</span></a>
+      </div>
+    </nav>
+
+    <a class="btn btn--primary hdr__cta" href="{{booking.url}}" target="_blank" rel="noopener">Rezervace</a>
+    <button class="hdr__burger" id="burger" type="button" aria-label="Otevřít menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="obsah">
+{{content}}
+</main>
+
+{{> cta}}
+
+<footer class="ftr">
+  <div class="container ftr__grid">
+    <div class="ftr__brand">
+      <img src="{{img}}/logo.webp" alt="OK GYM Fitcentrum" width="181" height="86" loading="lazy">
+      <p>Posilovna, lezení, skupinové lekce a wellness pod jednou střechou.</p>
+      <a class="link" href="{{address.map}}" target="_blank" rel="noopener">{{address.street}}, {{address.city}}</a>
+    </div>
+    <nav aria-label="Aktivity">
+      <h2 class="ftr__h">Aktivity</h2>
+      <ul>
+        <li><a href="/fitness-centrum">Fitness centrum</a></li>
+        <li><a href="/lezecke-steny">Lezecké stěny</a></li>
+        <li><a href="/multifunkcni-sal">Skupinové lekce</a></li>
+        <li><a href="/sauny">Sauny</a></li>
+        <li><a href="/masaze">Masáže</a></li>
+        <li><a href="/fitness-centrum#solarium">Solárium</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Praktické informace">
+      <h2 class="ftr__h">Praktické</h2>
+      <ul>
+        <li><a href="/cenik">Ceník</a></li>
+        <li><a href="/kontakt#oteviraci-doba">Otevírací doba</a></li>
+        <li><a href="/multifunkcni-sal#rozvrh">Rozvrh lekcí</a></li>
+        <li><a href="{{booking.url}}" target="_blank" rel="noopener">Rezervace online</a></li>
+        <li><a href="{{pdf.podminky}}" target="_blank" rel="noopener">Obchodní podmínky (PDF)</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2 class="ftr__h">Kontakt</h2>
+      <ul>
+        <li><a href="tel:{{phone.patro.tel}}">{{phone.patro.display}}</a><span>Posilovna, box, solárium</span></li>
+        <li><a href="tel:{{phone.prizemi.tel}}">{{phone.prizemi.display}}</a><span>Sauny, masáže, lezení, lekce</span></li>
+        <li><a href="mailto:{{email}}">{{email}}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container ftr__base">
+    <span>© 2026 {{site.legal}} · IČO {{site.ico}}</span>
+    <nav aria-label="Sociální sítě">
+      <a href="{{social.instagram}}" target="_blank" rel="noopener">Instagram</a>
+      <a href="{{social.facebook}}" target="_blank" rel="noopener">Facebook</a>
+      <a href="{{social.tiktok}}" target="_blank" rel="noopener">TikTok</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="/assets/main.js" defer></script>
+</body>
+</html>

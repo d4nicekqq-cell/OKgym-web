@@ -1,0 +1,90 @@
+<!--
+title: Sauny – OK GYM Pardubice
+description: Finská sauna, bio sauna s bylinkami a infrasauna. Sauny až pro 6 osob na 1 hodinu 45 minut, online rezervace.
+path: /sauny
+nav: sauny
+-->
+<section class="phero">
+  <div class="container phero__in">
+    <div class="phero__txt">
+      <nav class="crumbs" aria-label="Drobečková navigace"><a href="/">Úvod</a><span aria-hidden="true">/</span><span>Sauny</span></nav>
+      <h1>Sauny</h1>
+      <p class="lead">Odpočiň si od každodenního shonu. Tři sauny pro regeneraci po tréninku i pro obyčejný klid.</p>
+      <div class="btns">
+        <a class="btn btn--primary" href="#vyber">Vybrat saunu</a>
+        <a class="btn btn--outline" href="/cenik#sauny">Ceník</a>
+      </div>
+      <dl class="meta">
+        <div><dt>Kde</dt><dd>Přízemí</dd></div>
+        <div><dt>Kapacita</dt><dd>až 6 osob</dd></div>
+        <div><dt>Délka</dt><dd>1 h 45 min</dd></div>
+        <div><dt>Cena</dt><dd>od 390 Kč / osoba</dd></div>
+      </dl>
+    </div>
+    <div class="phero__img"><img src="{{img}}/sauna/header.webp" alt="Interiér finské sauny s modrým osvětlením" width="2261" height="3004" fetchpriority="high"></div>
+  </div>
+</section>
+
+<section class="section section--light" id="vyber">
+  <div class="container">
+    <header class="head rv">
+      <h2>Tři druhy saun</h2>
+      <p>Finská a bio sauna se rezervují na 1 hodinu 45 minut. Při plném obsazení šesti osobami dostaneš slevu.</p>
+    </header>
+    <div class="cols3">
+      <article class="spec rv">
+        <div class="spec__img"><img src="{{img}}/sauna/finska.webp" alt="Finská sauna" width="4032" height="3024" loading="lazy"></div>
+        <p class="spec__num">85–90 °C</p>
+        <h3>Finská sauna</h3>
+        <ul>
+          <li>Suché teplo</li>
+          <li>Ochlazení ve sprše, vědrem nebo v kádi</li>
+          <li>Odpočinek s hudbou a nápoji</li>
+        </ul>
+        <p class="spec__price"><b>390 Kč</b> / osoba<small>Při plném obsazení sleva celkem 200 Kč</small></p>
+        <a class="btn btn--dark" href="{{booking.finska}}" target="_blank" rel="noopener">Rezervovat</a>
+      </article>
+      <article class="spec rv">
+        <div class="spec__img"><img src="{{img}}/sauna/bio.webp" alt="Odpočívárna u bio sauny" width="4032" height="3024" loading="lazy"></div>
+        <p class="spec__num">70 °C</p>
+        <h3>Bio sauna</h3>
+        <ul>
+          <li>Vlhký vzduch s párou</li>
+          <li>Bylinky podle tvého výběru</li>
+          <li>Jemnější varianta saunování</li>
+        </ul>
+        <p class="spec__price"><b>410 Kč</b> / osoba<small>Při plném obsazení sleva celkem 246 Kč</small></p>
+        <a class="btn btn--dark" href="{{booking.bio}}" target="_blank" rel="noopener">Rezervovat</a>
+      </article>
+      <article class="spec rv">
+        <div class="spec__img"><img src="{{img}}/sauna/infra.webp" alt="Místnost s infrasaunou a masážním lůžkem" width="4032" height="3024" loading="lazy"></div>
+        <p class="spec__num">45 min</p>
+        <h3>Infrasauna</h3>
+        <ul>
+          <li>Hloubkové prohřátí těla</li>
+          <li>Nejvýše 45 minut</li>
+          <li>Ideální před masáží</li>
+        </ul>
+        <p class="spec__price"><b>280 Kč</b> / osoba<small>S masáží 1 290 Kč</small></p>
+        <a class="btn btn--dark" href="{{booking.infra}}" target="_blank" rel="noopener">Rezervovat</a>
+      </article>
+    </div>
+    <p class="notice rv"><strong>Infrasauna není vhodná</strong> pro těhotné ženy a osoby s prsními implantáty, kovovými náhradami nebo kardiostimulátorem.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <header class="rv">
+      <h2>Jak na saunování</h2>
+      <p class="lead">Jeden cyklus má tři kroky. Doporučujeme ho zopakovat aspoň třikrát.</p>
+    </header>
+    <ol class="steps rv">
+      <li><h3>Prohřátí</h3><p>V sauně zůstaň tak dlouho, jak je ti příjemné.</p></li>
+      <li><h3>Ochlazení</h3><p>Sprcha, vědro nebo ochlazovací káď.</p></li>
+      <li><h3>Odpočinek</h3><p>Lehni si, dej si něco k pití a nech tělo zklidnit.</p></li>
+    </ol>
+  </div>
+</section>
+
+{{> related}}

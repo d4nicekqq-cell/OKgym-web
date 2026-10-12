@@ -1,0 +1,87 @@
+<!--
+title: Fitness centrum – OK GYM Pardubice
+description: Klimatizovaná posilovna 800 m² s více než 90 stanovišti, boxerský sál s ringem a solárium Ergoline. První trénink s trenérem zdarma.
+path: /fitness-centrum
+nav: fitness
+-->
+<section class="phero">
+  <div class="container phero__in">
+    <div class="phero__txt">
+      <nav class="crumbs" aria-label="Drobečková navigace"><a href="/">Úvod</a><span aria-hidden="true">/</span><span>Fitness centrum</span></nav>
+      <h1>Fitness centrum</h1>
+      <p class="lead">Klimatizovaná posilovna na 800 m² s více než 90 stanovišti. Přijď si zacvičit do přátelského prostředí, kde tě nikdo nesoudí podle věku ani kondice.</p>
+      <div class="btns">
+        <a class="btn btn--primary" href="/cenik#fitness">Ceník vstupů</a>
+        <a class="btn btn--outline" href="tel:{{phone.patro.tel}}">Zavolat {{phone.patro.display}}</a>
+      </div>
+      <dl class="meta">
+        <div><dt>Kde</dt><dd>1. patro</dd></div>
+        <div><dt>Po–Pá</dt><dd>{{hours.patro.week}}</dd></div>
+        <div><dt>So–Ne</dt><dd>{{hours.patro.am}}, {{hours.patro.pm}}</dd></div>
+        <div><dt>Jednorázový vstup</dt><dd>185 Kč</dd></div>
+      </dl>
+    </div>
+    <div class="phero__img"><img src="{{img}}/fitness/header.webp" alt="Stojan s jednoručkami v posilovně OK GYM" width="2967" height="3956" fetchpriority="high"></div>
+  </div>
+</section>
+
+<section class="section section--light">
+  <div class="container media media--flip">
+    <div class="media__img rv"><img src="{{img}}/fitness/vybaveni.webp" alt="Posilovací lavice a stroje" width="6000" height="4000" loading="lazy"></div>
+    <div class="media__txt rv">
+      <h2>Pět zón, jedna posilovna</h2>
+      <ol class="steps">
+        <li><h3>Kardiozóna</h3><p>Běžecké pásy, eliptické trenažéry, schody a Air biky.</p></li>
+        <li><h3>Zóna strojů</h3><p>60 strojů a 2 multifunkční věže.</p></li>
+        <li><h3>Volné váhy</h3><p>60 jednoruček.</p></li>
+        <li><h3>Funkční a strečinková zóna</h3><p>Power racky, TRX a kettlebelly.</p></li>
+        <li><h3>Odpočinková zóna</h3><p>Proteinové nápoje a svačiny po tréninku.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <header class="head rv">
+      <h2>První trénink s trenérem je zdarma</h2>
+      <p>Nevíš, kde začít? Domluv si první trénink na recepci nebo po telefonu.</p>
+    </header>
+    <ul class="checks rv">
+      <li>Vítáme začátečníky i pokročilé</li>
+      <li>Parkování u budovy zdarma</li>
+      <li>Multisport, Benefity, Benefit Plus, Pluxee, UP ČR</li>
+      <li>Slevy pro studenty a seniory od 62 let</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--line" id="box">
+  <div class="container media">
+    <div class="media__img rv"><img src="{{img}}/gallery/box.webp" alt="Boxerský sál s ringem" width="1376" height="917" loading="lazy"></div>
+    <div class="media__txt rv">
+      <h2>Boxerský sál</h2>
+      <p class="lead">700 m² s profesionálním ringem, pytli, lapami a podlahou ze 6cm tatami.</p>
+      <p>V sále probíhají tréninky thajského boxu. V aerobním sále vedle najdeš kondiční cvičení a spinning.</p>
+      <div class="btns"><a class="btn btn--outline" href="tel:{{phone.patro.tel}}">Zeptat se na tréninky</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--line" id="solarium">
+  <div class="container media media--flip">
+    <div class="media__img media__img--sq rv"><img src="{{img}}/solarium/2.webp" alt="Solárium Ergoline Inspiration 400" width="838" height="861" loading="lazy"></div>
+    <div class="media__txt rv">
+      <h2>Solárium</h2>
+      <p class="lead">Ergoline Inspiration 400 Super Power s trubicemi, které podporují tvorbu kolagenu.</p>
+      <ul class="rows rows--static">
+        <li><span>Opalování</span><span class="rows__meta">15 Kč / minuta</span></li>
+        <li><span>Permanentka 50 minut</span><span class="rows__meta">650 Kč</span></li>
+        <li><span>Permanentka 100 minut</span><span class="rows__meta">1 300 Kč</span></li>
+      </ul>
+      <p class="muted">Kosmetiku před opalováním i po něm koupíš na recepci.</p>
+    </div>
+  </div>
+</section>
+
+{{> related}}

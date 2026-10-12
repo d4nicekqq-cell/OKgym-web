@@ -1,0 +1,55 @@
+<!--
+title: Kontakt a otevírací doba – OK GYM Pardubice
+description: OK GYM, Hůrka 1832, Pardubice – Dubina. Telefon do posilovny 775 563 301, na sauny, masáže, lezení a lekce 602 654 379. Otevírací doba obou pater.
+path: /kontakt
+nav: kontakt
+-->
+<section class="phero phero--plain">
+  <div class="container">
+    <nav class="crumbs" aria-label="Drobečková navigace"><a href="/">Úvod</a><span aria-hidden="true">/</span><span>Kontakt</span></nav>
+    <h1>Kontakt</h1>
+    <p class="lead">Každé patro má vlastní telefon. Zavolej tam, kam se chystáš.</p>
+  </div>
+</section>
+
+<section class="section section--flush">
+  <div class="container">
+    <div class="contacts">
+      <a class="contact" href="tel:{{phone.patro.tel}}">
+        <span class="eyebrow">1. patro · {{phone.patro.what}}</span>
+        <strong>{{phone.patro.display}}</strong>
+      </a>
+      <a class="contact" href="tel:{{phone.prizemi.tel}}">
+        <span class="eyebrow">Přízemí · {{phone.prizemi.what}}</span>
+        <strong>{{phone.prizemi.display}}</strong>
+      </a>
+      <a class="contact" href="mailto:{{email}}">
+        <span class="eyebrow">E-mail</span>
+        <strong>{{email}}</strong>
+      </a>
+      <a class="contact" href="{{address.map}}" target="_blank" rel="noopener">
+        <span class="eyebrow">Adresa · otevřít v mapách</span>
+        <strong>{{address.street}}<br>{{address.city}}</strong>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--light" id="oteviraci-doba">
+  <div class="container split">
+    <div class="rv">
+      <h2>Otevírací doba</h2>
+      {{> hours}}
+    </div>
+    <div class="rv">
+      <h2>Dobré vědět</h2>
+      <dl class="facts">
+        <div><dt>Parkování</dt><dd>U budovy, zdarma.</dd></div>
+        <div><dt>Benefitní karty</dt><dd>Multisport, Benefity, Benefit Plus, Pluxee a UP ČR.</dd></div>
+        <div><dt>Rezervace</dt><dd>Lekce, sauny a masáže v <a class="link" href="{{booking.url}}" target="_blank" rel="noopener">rezervačním systému</a>.</dd></div>
+        <div><dt>Sociální sítě</dt><dd><a class="link" href="{{social.instagram}}" target="_blank" rel="noopener">Instagram</a> · <a class="link" href="{{social.facebook}}" target="_blank" rel="noopener">Facebook</a> · <a class="link" href="{{social.tiktok}}" target="_blank" rel="noopener">TikTok</a></dd></div>
+        <div><dt>Provozovatel</dt><dd>{{site.legal}}, {{address.street}}, 530 12 Pardubice<br>IČO {{site.ico}} · DIČ {{site.dic}}</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>

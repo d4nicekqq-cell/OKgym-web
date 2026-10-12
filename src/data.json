@@ -1,0 +1,51 @@
+{
+  "site": {
+    "url": "https://www.okgym.cz",
+    "name": "OK GYM",
+    "legal": "OK gym, s.r.o.",
+    "ico": "17355346",
+    "dic": "CZ17355346"
+  },
+  "img": "https://www.okgym.cz/images",
+  "phone": {
+    "patro": { "display": "775 563 301", "tel": "+420775563301", "what": "Posilovna, box, solárium, nehtové studio" },
+    "prizemi": { "display": "602 654 379", "tel": "+420602654379", "what": "Sauny, masáže, lezení, skupinové lekce" }
+  },
+  "email": "info@okgym.cz",
+  "address": {
+    "street": "Hůrka 1832",
+    "city": "530 12 Pardubice – Dubina",
+    "map": "https://maps.app.goo.gl/KE6t9huGUyz3nvht8"
+  },
+  "hours": {
+    "patro": { "week": "7:00–21:30", "am": "9:00–12:00", "pm": "14:00–21:00" },
+    "prizemi": { "week": "7:30–22:00", "am": "9:00–12:00", "pm": "14:00–21:00" }
+  },
+  "booking": {
+    "url": "https://okgym.clubspire.cz/",
+    "week": "https://okgym.clubspire.cz/timeline/week",
+    "bungee": "https://okgym.clubspire.cz/timeline/week?activityId=a76d09f825eb6c900895d5256dce0b26",
+    "heat": "https://okgym.clubspire.cz/timeline/week?activityId=a76dc0d225eb6c904b48b02eb6cf8835",
+    "joga": "https://okgym.clubspire.cz/timeline/week?activityId=a76e85b225eb6c903aa7ace86e793b7c",
+    "pilates": "https://okgym.clubspire.cz/timeline/week?activityId=a76ebc9925eb6c9059f02be478a50217",
+    "finska": "https://okgym.clubspire.cz/timeline/week?activityId=93dc8b50-9435-4138-bea3-1c5ff76fba55",
+    "bio": "https://okgym.clubspire.cz/timeline/week?activityId=a780e34025eb6c9076670a159b0bbcb7",
+    "infra": "https://okgym.clubspire.cz/timeline/day?tabIdx=5",
+    "masaze": "https://okgym.clubspire.cz/timeline/day?tabIdx=3"
+  },
+  "pdf": {
+    "fitness": "https://www.okgym.cz/cenik-fitko-vstupy-1789421649204.pdf",
+    "lekce": "https://www.okgym.cz/cenik-mf-sal.pdf",
+    "rozvrh": "https://www.okgym.cz/rozvrh-mf-sal-1790090226410.pdf",
+    "stena": "https://www.okgym.cz/cenik-stena.pdf",
+    "kurzy": "https://www.okgym.cz/cenik-stena-kurzy.pdf",
+    "sauny": "https://www.okgym.cz/cenik-sauny.pdf",
+    "masaze": "https://www.okgym.cz/cenik-masaze.pdf",
+    "podminky": "https://www.okgym.cz/obchodni-podminky-1787820460517.pdf"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/okgym.cz/",
+    "facebook": "https://www.facebook.com/people/OK-GYM-Pardubice/100094511462626/",
+    "tiktok": "https://www.tiktok.com/@okgym_cz"
+  }
+}

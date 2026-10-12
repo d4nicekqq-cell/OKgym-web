@@ -1,0 +1,202 @@
+<!--
+title: OK GYM Pardubice – posilovna, lezení, lekce a sauny
+description: Posilovna 800 m², boxerský sál, lezecké stěny, skupinové lekce, sauny, masáže a solárium pod jednou střechou. Hůrka 1832, Pardubice – Dubina.
+path: /
+nav: home
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ExerciseGym",
+  "name": "OK GYM Fitcentrum",
+  "url": "{{site.url}}/",
+  "image": "{{img}}/fitness/index.webp",
+  "telephone": "{{phone.patro.tel}}",
+  "email": "{{email}}",
+  "address": { "@type": "PostalAddress", "streetAddress": "{{address.street}}", "postalCode": "530 12", "addressLocality": "Pardubice", "addressCountry": "CZ" },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "22:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "09:00", "closes": "12:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "14:00", "closes": "21:00" }
+  ]
+}
+</script>
+
+<section class="hero">
+  <img class="hero__img" src="{{img}}/fitness/vybaveni.webp" alt="" width="6000" height="4000" fetchpriority="high">
+  <div class="container hero__in">
+    <p class="eyebrow">Fitcentrum · Pardubice – Dubina</p>
+    <h1>Posilovna, lezení, lekce a sauna pod jednou střechou</h1>
+    <p class="lead">Zacvič si v posilovně na 800 m², vylez na osmimetrovou stěnu nebo přijď na lekci. Potom si odpočiň v sauně nebo na masáži.</p>
+    <div class="btns">
+      <a class="btn btn--primary" href="#aktivity">Prozkoumat aktivity</a>
+      <a class="btn btn--outline" href="/cenik">Ceník</a>
+    </div>
+  </div>
+  <div class="container hero__bar">
+    <a class="hero__fact" href="/kontakt#oteviraci-doba" data-floor="patro" data-week="{{hours.patro.week}}" data-weekend="{{hours.patro.am}}, {{hours.patro.pm}}">
+      <span class="eyebrow">1. patro · posilovna, box</span>
+      <span class="status" data-status>Otevírací doba</span>
+    </a>
+    <a class="hero__fact" href="/kontakt#oteviraci-doba" data-floor="prizemi" data-week="{{hours.prizemi.week}}" data-weekend="{{hours.prizemi.am}}, {{hours.prizemi.pm}}">
+      <span class="eyebrow">Přízemí · lezení, lekce, sauny</span>
+      <span class="status" data-status>Otevírací doba</span>
+    </a>
+    <a class="hero__fact" href="{{address.map}}" target="_blank" rel="noopener">
+      <span class="eyebrow">Kde nás najdeš</span>
+      <span>{{address.street}}, Pardubice · parkování zdarma</span>
+    </a>
+  </div>
+</section>
+
+<section class="section" id="aktivity">
+  <div class="container">
+    <header class="head rv">
+      <h2>Co u nás najdeš</h2>
+      <p>Šest aktivit ve dvou patrech jedné budovy. Vyber si, čím začneš.</p>
+    </header>
+
+    <div class="bento">
+      <a class="tile tile--lead rv" href="/fitness-centrum">
+        <div class="tile__img"><img src="{{img}}/fitness/index.webp" alt="Posilovna OK GYM se stroji a volnými vahami" width="6000" height="4000" loading="lazy"></div>
+        <div class="tile__cap">
+          <h3>Fitness centrum</h3>
+          <p>Klimatizovaná posilovna s více než 90 stanovišti a boxerský sál s ringem.</p>
+        </div>
+      </a>
+      <a class="tile rv" href="/lezecke-steny">
+        <div class="tile__img"><img src="{{img}}/steny/lezecka.webp" alt="Lezecká stěna s barevnými chyty" width="6000" height="4000" loading="lazy"></div>
+        <div class="tile__cap">
+          <h3>Lezecké stěny</h3>
+          <p>Stěna vysoká 8 m, boulder a MoonBoard. Vybavení půjčíme.</p>
+        </div>
+      </a>
+      <a class="tile rv" href="/multifunkcni-sal">
+        <div class="tile__img"><img src="{{img}}/sal/bungee.webp" alt="Lekce bungee workoutu v multifunkčním sále" width="1376" height="917" loading="lazy"></div>
+        <div class="tile__cap">
+          <h3>Skupinové lekce</h3>
+          <p>Bungee, H.E.A.T., pilates a jóga. I pro úplné začátečníky.</p>
+        </div>
+      </a>
+      <a class="tile tile--sm rv" href="/sauny">
+        <div class="tile__img"><img src="{{img}}/sauna/finska.webp" alt="Finská sauna" width="4032" height="3024" loading="lazy"></div>
+        <div class="tile__cap">
+          <h3>Sauny</h3>
+          <p>Finská, bio s bylinkami a infrasauna.</p>
+        </div>
+      </a>
+      <a class="tile tile--sm rv" href="/masaze">
+        <div class="tile__img"><img src="{{img}}/masaze/index.webp" alt="Masážní místnost" width="6000" height="4000" loading="lazy"></div>
+        <div class="tile__cap">
+          <h3>Masáže</h3>
+          <p>Relaxační, sportovní, havajská i lávovými kameny.</p>
+        </div>
+      </a>
+      <a class="tile tile--sm rv" href="/fitness-centrum#solarium">
+        <div class="tile__img"><img src="{{img}}/solarium/2.webp" alt="Solárium Ergoline" width="838" height="861" loading="lazy"></div>
+        <div class="tile__cap">
+          <h3>Solárium</h3>
+          <p>Ergoline Inspiration 400 v 1. patře.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--light" id="prakticke">
+  <div class="container split">
+    <div class="rv">
+      <h2>Otevírací doba</h2>
+      {{> hours}}
+    </div>
+    <div class="rv">
+      <h2>Jak se k nám dostaneš</h2>
+      <dl class="facts">
+        <div>
+          <dt>Adresa</dt>
+          <dd><a class="link" href="{{address.map}}" target="_blank" rel="noopener">{{address.street}}, {{address.city}}</a><br>Parkování u budovy zdarma.</dd>
+        </div>
+        <div>
+          <dt>Telefon</dt>
+          <dd><a class="link" href="tel:{{phone.patro.tel}}">{{phone.patro.display}}</a> · posilovna, box, solárium<br><a class="link" href="tel:{{phone.prizemi.tel}}">{{phone.prizemi.display}}</a> · sauny, masáže, lezení, lekce</dd>
+        </div>
+        <div>
+          <dt>Benefitní karty</dt>
+          <dd>Multisport, Benefity, Benefit Plus, Pluxee a UP ČR.</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="lekce">
+  <div class="container media">
+    <div class="media__img rv"><img src="{{img}}/sal/vsude.webp" alt="Multifunkční sál s trenažéry na H.E.A.T." width="6000" height="4000" loading="lazy"></div>
+    <div class="media__txt rv">
+      <h2>Lekce každý den v týdnu</h2>
+      <p class="lead">Od dynamického H.E.A.T. po klidnou jógu. Místo si zamluvíš online.</p>
+      <ul class="rows">
+        <li><a href="{{booking.bungee}}" target="_blank" rel="noopener"><span>Bungee workout</span><span class="rows__meta">250 Kč</span></a></li>
+        <li><a href="{{booking.heat}}" target="_blank" rel="noopener"><span>H.E.A.T.</span><span class="rows__meta">190 Kč</span></a></li>
+        <li><a href="{{booking.joga}}" target="_blank" rel="noopener"><span>Jóga</span><span class="rows__meta">190 Kč</span></a></li>
+        <li><a href="{{booking.pilates}}" target="_blank" rel="noopener"><span>Pilates</span><span class="rows__meta">200 Kč</span></a></li>
+      </ul>
+      <div class="btns">
+        <a class="btn btn--primary" href="/multifunkcni-sal#rozvrh">Rozvrh lekcí</a>
+        <a class="btn btn--outline" href="/multifunkcni-sal">O lekcích</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--light" id="ceny">
+  <div class="container">
+    <header class="head rv">
+      <h2>Kolik to stojí</h2>
+      <p>Základní ceny jednorázových vstupů. Permanentky a studentské slevy najdeš v ceníku.</p>
+    </header>
+    <ul class="prices rv">
+      <li><a href="/cenik#fitness"><span>Posilovna</span><small>jednorázový vstup</small><b>185 Kč</b></a></li>
+      <li><a href="/cenik#lezeni"><span>Lezení</span><small>dospělý</small><b>220 Kč</b></a></li>
+      <li><a href="/cenik#lekce"><span>Skupinová lekce</span><small>od</small><b>190 Kč</b></a></li>
+      <li><a href="/cenik#sauny"><span>Sauna</span><small>osoba, 1 h 45 min, od</small><b>390 Kč</b></a></li>
+      <li><a href="/cenik#masaze"><span>Masáž</span><small>1 hodina</small><b>950 Kč</b></a></li>
+    </ul>
+    <a class="btn btn--dark rv" href="/cenik">Celý ceník</a>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container split split--faq">
+    <div class="rv">
+      <h2>Než přijdeš poprvé</h2>
+      <div class="media__img media__img--wide"><img src="{{img}}/gallery/FOT08301.webp" alt="Skupina lezců u bouldrové stěny v OK GYM" width="1376" height="917" loading="lazy"></div>
+    </div>
+    <div class="faq rv">
+      <details>
+        <summary>Jsem začátečník. Zvládnu to?</summary>
+        <p>Ano. První trénink s trenérem v posilovně máš zdarma a skupinové lekce nevyžadují žádné předchozí zkušenosti. Na lezení nabízíme kurzy s instruktorem.</p>
+      </details>
+      <details>
+        <summary>Musím si něco rezervovat?</summary>
+        <p>Skupinové lekce, sauny a masáže si rezervuješ online v rezervačním systému. Kurzy lezení se domlouvají po telefonu podle kapacity instruktora.</p>
+      </details>
+      <details>
+        <summary>Berete Multisport a další karty?</summary>
+        <p>Ano, přijímáme Multisport, Benefity, Benefit Plus, Pluxee a UP ČR.</p>
+      </details>
+      <details>
+        <summary>Kde zaparkuju?</summary>
+        <p>Přímo u budovy na adrese {{address.street}}, zdarma.</p>
+      </details>
+      <details>
+        <summary>Nemám lezecké vybavení. Vadí to?</summary>
+        <p>Nevadí. Lezečky, sedák, lano i jisticí pomůcky si půjčíš na místě. Ceny půjčovného jsou v <a class="link" href="/cenik#lezeni">ceníku</a>.</p>
+      </details>
+      <details>
+        <summary>Jak je to se zrušením rezervace?</summary>
+        <p>Rezervaci zruš nejpozději 12 hodin předem. Při pozdějším odhlášení se účtuje storno poplatek 100 %.</p>
+      </details>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OK GYM Pardubice — trénink, adrenalin, regenerace</title>
+<meta name="description" content="Posilovna 800 m², box, lezecké stěny, lekce, sauny, masáže a solárium pod jednou střechou. Hůrka 1832, Pardubice – Dubina.">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" href="https://www.okgym.cz/images/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<div class="loader" aria-hidden="true"><img src="https://www.okgym.cz/images/logo.webp" alt="" width="181" height="86"></div>
+
+<header class="top" id="topbar">
+  <a class="top__logo" href="#top" aria-label="OK GYM — nahoru"><img src="https://www.okgym.cz/images/logo.webp" alt="OK GYM Fitcentrum" width="181" height="86"></a>
+  <a class="top__status" href="#dnes"><i></i><span data-status>Otevírací doba</span></a>
+  <nav class="top__nav" aria-label="Hlavní navigace">
+    <a href="#aktivity">Aktivity</a>
+    <a href="#dnes">Otevírací doba</a>
+    <a href="#ceniky">Ceníky</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+  <a class="top__book" href="https://okgym.clubspire.cz/" target="_blank" rel="noopener">Rezervace ↗</a>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <div class="hero__media" aria-hidden="true">
+    <img src="img/trenink-4k.jpg" alt="" style="--fx:fxWipe">
+    <img src="https://www.okgym.cz/images/steny/index.webp" alt="" style="--fx:fxCircle">
+    <img src="img/sauna-4k.jpg" alt="" style="--fx:fxDiag">
+  </div>
+
+  <h1 class="hero__title" aria-label="Trénink, adrenalin, regenerace">
+    <span class="hero__line" aria-hidden="true"><span class="fit">Trénink</span></span>
+    <span class="hero__line" aria-hidden="true"><span class="fit">Adrenalin</span></span>
+    <span class="hero__line" aria-hidden="true"><span class="fit">Regenerace</span></span>
+  </h1>
+
+  <div class="hero__foot">
+    <p>Pod jednou střechou.<br>Hůrka 1832, Pardubice – Dubina</p>
+    <a class="hero__cta" href="#aktivity">Co u nás najdeš <span>↓</span></a>
+  </div>
+</section>
+
+<section class="acts" id="aktivity">
+  <header class="label rv"><h2>Aktivity</h2></header>
+  <div class="acts__grid">
+    <ul class="acts__list" id="list"></ul>
+
+    <aside class="panel" id="panel" aria-live="polite">
+      <div class="panel__head">
+        <span class="panel__grip" aria-hidden="true"></span>
+        <strong id="panelTitle"></strong>
+        <button class="panel__close" id="panelClose" type="button" aria-label="Zavřít">✕</button>
+      </div>
+      <div class="panel__img"><img alt=""><img alt=""></div>
+      <div class="panel__body" id="panelBody">
+        <p class="panel__desc"></p>
+        <div class="panel__facts"></div>
+        <div class="panel__links"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+<div class="scrim" id="scrim"></div>
+
+<section class="today" id="dnes">
+  <header class="label rv"><h2>Otevírací doba</h2></header>
+  <p class="today__title rv">Dnes <span data-day></span></p>
+
+  <div class="tls" id="tls">
+  <div class="tl rv" data-floor="patro">
+    <div class="tl__who"><strong>1. patro</strong><small>Posilovna, solárium, nehty, box, aerobik</small></div>
+    <div class="tl__bar"></div>
+    <div class="tl__state">—</div>
+  </div>
+  <div class="tl rv" data-floor="prizemi">
+    <div class="tl__who"><strong>Přízemí</strong><small>Sauny, masáže, lezení, multifunkční sál</small></div>
+    <div class="tl__bar"></div>
+    <div class="tl__state">—</div>
+  </div>
+  <i class="tls__now" id="nowLine" aria-hidden="true"></i>
+  </div>
+
+  <dl class="week rv">
+    <div><dt>1. patro</dt><dd>Po–Pá 7:00–21:30<sup>*</sup></dd><dd>So–Ne, svátky 9:00–12:00 · 14:00–21:00</dd></div>
+    <div><dt>Přízemí</dt><dd>Po–Pá 7:30–22:00</dd><dd>So–Ne, svátky 9:00–12:00 · 14:00–21:00</dd></div>
+  </dl>
+  <p class="fine rv">* O letních prázdninách ve všední dny do 21:00.</p>
+</section>
+
+<section class="prices" id="ceniky">
+  <header class="label rv"><h2>Ceníky a rozvrh</h2></header>
+
+  <details class="acc rv" id="cenik-posilovna">
+    <summary>Posilovna</summary>
+    <div class="acc__body">
+      <table class="pt">
+        <caption>Časové permanentky</caption>
+        <thead><tr><th scope="col">Délka</th><th scope="col">Běžná</th><th scope="col">Student</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">1 měsíc</th><td>1 270 Kč</td><td>1 050 Kč</td></tr>
+          <tr><th scope="row">2 měsíce</th><td>2 380 Kč</td><td>1 850 Kč</td></tr>
+          <tr><th scope="row">3 měsíce</th><td>3 480 Kč</td><td>2 850 Kč</td></tr>
+          <tr><th scope="row">6 měsíců</th><td>6 770 Kč</td><td>–</td></tr>
+          <tr><th scope="row">12 měsíců</th><td>10 570 Kč</td><td>–</td></tr>
+        </tbody>
+      </table>
+      <table class="pt">
+        <caption>Vstupové permanentky</caption>
+        <thead><tr><th scope="col">Počet</th><th scope="col">Běžná</th><th scope="col">Student</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">3 vstupy</th><td>390 Kč</td><td>320 Kč</td></tr>
+          <tr><th scope="row">5 vstupů</th><td>630 Kč</td><td>530 Kč</td></tr>
+          <tr><th scope="row">10 vstupů</th><td>1 280 Kč</td><td>1 060 Kč</td></tr>
+          <tr><th scope="row">20 vstupů</th><td>2 320 Kč</td><td>2 100 Kč</td></tr>
+          <tr><th scope="row">30 vstupů</th><td>3 380 Kč</td><td>–</td></tr>
+          <tr><th scope="row">40 vstupů</th><td>4 220 Kč</td><td>–</td></tr>
+        </tbody>
+      </table>
+      <table class="pt">
+        <caption>Jednorázově</caption>
+        <thead><tr><th scope="col">Vstup</th><th scope="col">Cena</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Vstup na neomezenou dobu</th><td>185 Kč</td></tr>
+        </tbody>
+      </table>
+      <p class="acc__note">Studentská cena: držitelé ZTP, mládež do 15 let v doprovodu zákonného zástupce, mládež do 18 let po předložení OP, studenti do 25 let se studentským průkazem a senioři od 62 let.</p>
+    </div>
+  </details>
+
+  <details class="acc rv" id="cenik-solarium">
+    <summary>Solárium</summary>
+    <div class="acc__body">
+      <table class="pt">
+        <caption>Opalování</caption>
+        <tbody>
+          <tr><th scope="row">Ergoline turbo solárium</th><td>15 Kč / minuta</td></tr>
+          <tr><th scope="row">Permanentka 50 minut</th><td>650 Kč</td></tr>
+          <tr><th scope="row">Permanentka 100 minut</th><td>1 300 Kč</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc rv" id="cenik-lekce">
+    <summary>Lekce</summary>
+    <div class="acc__body">
+      <table class="pt">
+        <caption>Jedna lekce</caption>
+        <thead><tr><th scope="col">Lekce</th><th scope="col">Běžná</th><th scope="col">Student</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Bungee workout</th><td>250 Kč</td><td>220 Kč</td></tr>
+          <tr><th scope="row">H.E.A.T.</th><td>190 Kč</td><td>170 Kč</td></tr>
+          <tr><th scope="row">Jóga</th><td>190 Kč</td><td>170 Kč</td></tr>
+          <tr><th scope="row">Pilates</th><td>200 Kč</td><td>180 Kč</td></tr>
+        </tbody>
+      </table>
+      <table class="pt">
+        <caption>Permanentka 10 lekcí</caption>
+        <thead><tr><th scope="col">Lekce</th><th scope="col">Běžná</th><th scope="col">Student</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Bungee workout</th><td>2 200 Kč</td><td>1 870 Kč</td></tr>
+          <tr><th scope="row">H.E.A.T.</th><td>1 620 Kč</td><td>1 520 Kč</td></tr>
+          <tr><th scope="row">Jóga</th><td>1 620 Kč</td><td>1 520 Kč</td></tr>
+          <tr><th scope="row">Pilates</th><td>1 700 Kč</td><td>1 530 Kč</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc rv" id="cenik-rozvrh">
+    <summary>Rozvrh lekcí</summary>
+    <div class="acc__body acc__body--week">
+      <table class="pt" data-weekday="1">
+        <caption>Pondělí</caption>
+        <tbody>
+        <tr><th scope="row">H.E.A.T.</th><td>8:00–9:00</td></tr>
+        <tr><th scope="row">Bungee pokročilí</th><td>10:00–11:30</td></tr>
+        <tr><th scope="row">H.E.A.T.</th><td>16:30–17:30</td></tr>
+        <tr class="is-closed"><th scope="row">Box<small>uzavřená skupina</small></th><td>17:30–18:45</td></tr>
+        <tr class="is-closed"><th scope="row">Piloxing<small>uzavřená skupina</small></th><td>19:00–20:00</td></tr>
+      </tbody>
+      </table>
+      <table class="pt" data-weekday="2">
+        <caption>Úterý</caption>
+        <tbody>
+        <tr><th scope="row">H.E.A.T.</th><td>8:00–9:00</td></tr>
+        <tr><th scope="row">Jóga</th><td>9:00–10:00</td></tr>
+        <tr><th scope="row">Bungee začátečníci</th><td>11:00–12:30</td></tr>
+        <tr><th scope="row">Bungee začátečníci</th><td>16:00–17:30</td></tr>
+        <tr><th scope="row">H.E.A.T.</th><td>17:30–18:30</td></tr>
+        <tr class="is-closed"><th scope="row">Fit dance<small>uzavřená skupina</small></th><td>18:30–19:30</td></tr>
+      </tbody>
+      </table>
+      <table class="pt" data-weekday="3">
+        <caption>Středa</caption>
+        <tbody>
+        <tr><th scope="row">H.E.A.T.</th><td>8:00–9:00</td></tr>
+        <tr><th scope="row">Jóga senioři</th><td>10:00–11:00</td></tr>
+        <tr><th scope="row">Pilates</th><td>14:00–15:00</td></tr>
+        <tr><th scope="row">Pilates</th><td>15:00–16:00</td></tr>
+        <tr><th scope="row">H.E.A.T.</th><td>16:30–17:30</td></tr>
+        <tr class="is-closed"><th scope="row">Box<small>uzavřená skupina</small></th><td>17:30–18:45</td></tr>
+      </tbody>
+      </table>
+      <table class="pt" data-weekday="4">
+        <caption>Čtvrtek</caption>
+        <tbody>
+        <tr><th scope="row">H.E.A.T.</th><td>8:00–9:00</td></tr>
+        <tr><th scope="row">Bungee začátečníci</th><td>11:00–12:30</td></tr>
+        <tr><th scope="row">Pilates</th><td>14:00–15:00</td></tr>
+        <tr><th scope="row">Pilates</th><td>15:00–16:00</td></tr>
+        <tr><th scope="row">Bungee pokročilí</th><td>16:00–17:30</td></tr>
+        <tr><th scope="row">H.E.A.T.</th><td>17:30–18:30</td></tr>
+        <tr><th scope="row">Jóga</th><td>18:30–19:30</td></tr>
+      </tbody>
+      </table>
+      <table class="pt" data-weekday="5">
+        <caption>Pátek</caption>
+        <tbody>
+        <tr><th scope="row">H.E.A.T.</th><td>8:00–9:00</td></tr>
+        <tr><th scope="row">Jóga</th><td>9:00–10:00</td></tr>
+        <tr><th scope="row">Pilates</th><td>15:00–16:00</td></tr>
+        <tr><th scope="row">H.E.A.T.</th><td>16:30–17:30</td></tr>
+        <tr><th scope="row">Bungee pokročilí</th><td>17:30–19:00</td></tr>
+      </tbody>
+      </table>
+      <table class="pt" data-weekday="6">
+        <caption>Sobota</caption>
+        <tbody>
+        <tr><th scope="row">H.E.A.T.</th><td>9:00–10:00</td></tr>
+        <tr><th scope="row">Bungee pokročilí</th><td>10:00–11:30</td></tr>
+      </tbody>
+      </table>
+      <table class="pt" data-weekday="0">
+        <caption>Neděle</caption>
+        <tbody>
+        <tr class="is-closed"><th scope="row">Piloxing<small>uzavřená skupina</small></th><td>10:00–11:00</td></tr>
+        <tr><th scope="row">Pilates</th><td>11:00–12:00</td></tr>
+        <tr><th scope="row">Bungee začátečníci</th><td>15:30–17:00</td></tr>
+        <tr><th scope="row">Jóga</th><td>20:00–21:00</td></tr>
+      </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc rv" id="cenik-lezeni">
+    <summary>Lezení</summary>
+    <div class="acc__body">
+      <table class="pt">
+        <caption>Jednorázové vstupné</caption>
+        <tbody>
+          <tr><th scope="row">Dospělý</th><td>220 Kč</td></tr>
+          <tr><th scope="row">Student</th><td>160 Kč</td></tr>
+          <tr><th scope="row">Dítě do 15 let</th><td>120 Kč</td></tr>
+          <tr><th scope="row">Dítě do 6 let</th><td>50 Kč</td></tr>
+          <tr><th scope="row">Rodinné vstupné 2 + 2</th><td>600 Kč</td></tr>
+          <tr><th scope="row">Pouze jistič / doprovod</th><td>50 Kč</td></tr>
+          <tr><th scope="row">Permice dospělý<small>10 vstupů + 1 zdarma</small></th><td>2 000 Kč</td></tr>
+          <tr><th scope="row">Permice student<small>10 vstupů + 1 zdarma</small></th><td>1 500 Kč</td></tr>
+        </tbody>
+      </table>
+      <table class="pt">
+        <caption>Půjčovné</caption>
+        <tbody>
+          <tr><th scope="row">Lezečky dospělý</th><td>60 Kč</td></tr>
+          <tr><th scope="row">Lezečky dítě</th><td>40 Kč</td></tr>
+          <tr><th scope="row">Sedák</th><td>50 Kč</td></tr>
+          <tr><th scope="row">Lano</th><td>70 Kč</td></tr>
+          <tr><th scope="row">Jistítko + karabina</th><td>50 Kč</td></tr>
+          <tr><th scope="row">Karabina</th><td>20 Kč</td></tr>
+          <tr><th scope="row">Gri-Gri</th><td>60 Kč</td></tr>
+          <tr><th scope="row">Petzl Ohm</th><td>50 Kč</td></tr>
+        </tbody>
+      </table>
+      <table class="pt">
+        <caption>Sleva při nabití depozitu</caption>
+        <tbody>
+          <tr><th scope="row">5 000 Kč</th><td>sleva 10 %</td></tr>
+          <tr><th scope="row">10 000 Kč</th><td>sleva 15 %</td></tr>
+          <tr><th scope="row">15 000 Kč</th><td>sleva 20 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc rv" id="cenik-sauny">
+    <summary>Sauny</summary>
+    <div class="acc__body">
+      <table class="pt">
+        <caption>Sauny až pro 6 osob</caption>
+        <tbody>
+          <tr><th scope="row">Finská sauna<small>1 h 45 min · při plném obsazení sleva celkem 200 Kč</small></th><td>390 Kč / osoba</td></tr>
+          <tr><th scope="row">Bio sauna<small>1 h 45 min · při plném obsazení sleva celkem 246 Kč</small></th><td>410 Kč / osoba</td></tr>
+          <tr><th scope="row">Infrasauna<small>maximálně 45 min</small></th><td>280 Kč / osoba</td></tr>
+          <tr><th scope="row">Infrasauna + masáž</th><td>1 290 Kč</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc rv" id="cenik-masaze">
+    <summary>Masáže</summary>
+    <div class="acc__body">
+      <table class="pt">
+        <caption>Všechny druhy masáží</caption>
+        <tbody>
+          <tr><th scope="row">1 hodina</th><td>950 Kč</td></tr>
+          <tr><th scope="row">1,5 hodiny</th><td>1 350 Kč</td></tr>
+          <tr><th scope="row">Infrasauna + masáž</th><td>1 290 Kč</td></tr>
+        </tbody>
+      </table>
+      <p class="acc__note">Druhy masáží: harmonizace těla, relaxační, sportovní, havajská a lávovými kameny. Individuální přístup s přídavkem techniky Access Bars.</p>
+    </div>
+  </details>
+</section>
+
+<section class="contact" id="kontakt">
+  <div class="rv">
+    <h2 class="label__h">Zavolej</h2>
+    <a class="big" href="tel:+420775563301">775 563 301<small>1. patro</small></a>
+    <a class="big" href="tel:+420602654379">602 654 379<small>Přízemí</small></a>
+    <a class="u" href="mailto:info@okgym.cz">info@okgym.cz</a>
+  </div>
+  <div class="rv" style="--i:1">
+    <h2 class="label__h">Přijď</h2>
+    <a class="big" href="https://maps.app.goo.gl/KE6t9huGUyz3nvht8" target="_blank" rel="noopener">Hůrka 1832<small>Pardubice – Dubina ↗</small></a>
+    <p>Parkování u budovy zdarma.<br>Multisport, Benefity, Benefit Plus, Pluxee, UP ČR.</p>
+  </div>
+</section>
+
+<a class="book" id="book" href="https://okgym.clubspire.cz/" target="_blank" rel="noopener" aria-label="Online rezervace">
+  <span class="book__hint">Online rezervace ↗</span>
+  <span class="book__line"><span class="fit">Rezervace</span></span>
+</a>
+</main>
+
+<footer class="foot">
+  <span>© 2026 OKGYM · IČO 17355346</span>
+  <nav aria-label="Sociální sítě">
+    <a href="https://www.instagram.com/okgym.cz/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/people/OK-GYM-Pardubice/100094511462626/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.tiktok.com/@okgym_cz" target="_blank" rel="noopener">TikTok</a>
+  </nav>
+  <a href="https://www.okgym.cz/obchodni-podminky-1787820460517.pdf" target="_blank" rel="noopener">Obchodní podmínky</a>
+</footer>
+
+<nav class="tabs" id="tabs" aria-label="Rychlá navigace">
+  <a href="#aktivity">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6M7 6v12M17 6v12M20 9v6M7 12h10"/></svg>Aktivity
+  </a>
+  <a href="#dnes" class="tabs__open">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Otevřeno
+  </a>
+  <a href="#kontakt">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Kontakt
+  </a>
+  <a class="tabs__book" href="https://okgym.clubspire.cz/" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.500 3.500v4M15.500 3.500v4"/></svg>Rezervace
+  </a>
+</nav>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<div class="hours">
+  <div class="hours__row" data-floor="patro" data-week="{{hours.patro.week}}" data-weekend="{{hours.patro.am}}, {{hours.patro.pm}}">
+    <div class="hours__who">
+      <h3>1. patro</h3>
+      <p>{{phone.patro.what}}</p>
+      <p class="status" data-status>—</p>
+    </div>
+    <dl>
+      <div data-days="week"><dt>Pondělí–pátek</dt><dd>{{hours.patro.week}}</dd></div>
+      <div data-days="weekend"><dt>Sobota, neděle, svátky</dt><dd>{{hours.patro.am}}<br>{{hours.patro.pm}}</dd></div>
+    </dl>
+  </div>
+  <div class="hours__row" data-floor="prizemi" data-week="{{hours.prizemi.week}}" data-weekend="{{hours.prizemi.am}}, {{hours.prizemi.pm}}">
+    <div class="hours__who">
+      <h3>Přízemí</h3>
+      <p>{{phone.prizemi.what}}</p>
+      <p class="status" data-status>—</p>
+    </div>
+    <dl>
+      <div data-days="week"><dt>Pondělí–pátek</dt><dd>{{hours.prizemi.week}}</dd></div>
+      <div data-days="weekend"><dt>Sobota, neděle, svátky</dt><dd>{{hours.prizemi.am}}<br>{{hours.prizemi.pm}}</dd></div>
+    </dl>
+  </div>
+  <p class="hours__note">O letních prázdninách je 1. patro ve všední dny otevřené do 21:00.</p>
+</div>
