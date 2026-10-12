@@ -172,7 +172,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .tl__t--end { transform: translateX(-100%); }
 .tl.is-in .tl__t { opacity: 1; }
 .tls { position: relative; }
-.tlm, .tl__past { display: none; }
 .tls__now::after { content: attr(data-time); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); color: var(--acc); font-size: .8rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
 .tl__seg { position: absolute; top: 0; bottom: 0; background: var(--fg); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.3s var(--ease) .15s; }
 .tl.is-in .tl__seg { transform: none; }
@@ -384,53 +383,4 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .book__line { clip-path: inset(-.2em 0 0 0); }
   .js .book .fit { transform: translateY(105%); }
   .js .book.is-in .fit { transform: none; }
-}
-
-/* ---------- Phone: opening hours as a compact chart plus status cards ---------- */
-@media (max-width: 860px) {
-  .today__title { margin-bottom: 18px; }
-
-  /* Chart: floor name on the left, bar on the right, both bars close together under one "now" line */
-  .tls { padding: 8px 0 4px; border-top: 1px solid var(--line); }
-  .tl { grid-template-columns: 70px 1fr; gap: 0 12px; padding: 0; border-top: 0; align-items: center; }
-  .tl__who small, .tl__state { display: none; }
-  .tl__who strong { font-size: .95rem; }
-  .tl__bar {
-    grid-column: auto; grid-row: auto; height: 16px; margin: 30px 0 28px; border-radius: 8px;
-    /* faint marks every three hours */
-    background:
-      repeating-linear-gradient(90deg, transparent 0 calc(17.647% - 1px), rgba(238, 236, 230, .16) calc(17.647% - 1px) 17.647%),
-      rgba(238, 236, 230, .07);
-  }
-  .tl__seg { border-radius: 8px; }
-  .tl__past { display: block; position: absolute; top: 0; bottom: 0; border-radius: 8px 0 0 8px; background: rgba(10, 10, 10, .58); opacity: 0; transition: opacity .6s 1.2s; }
-  .tl.is-in .tl__past { opacity: 1; }
-  .tl__t { top: calc(100% + 7px); font-size: .76rem; }
-  .tls__now { width: 2px; }
-  .tls__now::before { animation: nowPulse 2s infinite; }
-  @keyframes nowPulse { from { box-shadow: 0 0 0 0 rgba(248, 101, 47, .6); } to { box-shadow: 0 0 0 9px rgba(248, 101, 47, 0); } }
-
-  /* Cards: state, countdown and full hours for each floor */
-  .week, .fine { display: none; }
-  .tlm { display: grid; gap: 12px; margin-top: 10px; }
-  .js .tlm .tlm__card { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease), border-color .4s; }
-  .js .tlm.is-in .tlm__card { opacity: 1; transform: none; }
-  .js .tlm.is-in .tlm__card + .tlm__card { transition-delay: .1s; }
-  .tlm__card { padding: 18px 18px 16px; border: 1px solid var(--line); border-radius: 14px; background: #121211; }
-  .tlm__card.is-open { border-color: rgba(95, 224, 138, .32); }
-  .tlm__card header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .tlm__card h3 { margin: 0; font-size: 1.05rem; font-weight: 700; }
-  .tlm__state { display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border-radius: 999px; background: rgba(238, 236, 230, .08); color: var(--dim); font-size: .78rem; font-weight: 600; }
-  .tlm__state i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-  .is-open .tlm__state { background: rgba(95, 224, 138, .14); color: var(--ok); }
-  .is-open .tlm__state i { animation: ping 2s infinite; }
-  .tlm__count { margin-top: 14px; color: var(--dim); font-size: .95rem; }
-  .tlm__count b { display: block; color: var(--fg); font-size: 2.1rem; font-weight: 800; font-stretch: 75%; line-height: 1.05; font-variant-numeric: tabular-nums; }
-  .tlm__what { margin-top: 8px; color: var(--dim); font-size: .88rem; }
-  .tlm__card dl { margin: 14px 0 0; border-top: 1px solid var(--line); }
-  .tlm__card dl div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); color: var(--dim); font-size: .93rem; }
-  .tlm__card dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
-  .tlm__card dl .is-today { color: var(--fg); font-weight: 600; }
-  .tlm__card dl .is-today dt::after { content: " · dnes"; color: var(--acc); }
-  .tlm__note { margin-top: 10px; color: var(--dim); font-size: .8rem; }
 }

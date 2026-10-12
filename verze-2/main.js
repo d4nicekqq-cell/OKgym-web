@@ -287,8 +287,7 @@
     const p = Object.fromEntries(new Intl.DateTimeFormat('en-GB', {
       timeZone: 'Europe/Prague', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false,
     }).formatToParts(new Date()).map((x) => [x.type, x.value]));
-    const day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday);
-    return { day, key: day === 0 || day === 6 ? 'weekend' : 'week', mins: (+p.hour % 24) * 60 + +p.minute };
+    return { key: p.weekday === 'Sat' || p.weekday === 'Sun' ? 'weekend' : 'week', mins: (+p.hour % 24) * 60 + +p.minute };
   };
   $('[data-day]').textContent = new Intl.DateTimeFormat('cs-CZ', { weekday: 'long', timeZone: 'Europe/Prague' }).format(new Date());
   const weekday = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Prague" })).getDay();
@@ -318,56 +317,22 @@
     nowWidth = innerWidth;
     placeNow(lastMins);
   });
-
-  // Phone-only status cards under the bars: state, countdown and the full hours per floor
-  const tlm = $('#tlm');
-  const NOTE = { patro: 'O letních prázdninách ve všední dny do 21:00.' };
-  const span = (m) => {
-    const h = Math.floor(m / 60), r = m % 60;
-    return h && r ? `${h} h ${r} min` : h ? `${h} h` : `${r} min`;
-  };
-  const slotsText = (slots) => slots.map(([a, b]) => `${fmt(a)}–${fmt(b)}`).join(' · ');
-  const renderCards = (key, mins, day) => {
-    const tomorrow = (day + 1) % 7;
-    const tomorrowKey = tomorrow === 0 || tomorrow === 6 ? 'weekend' : 'week';
-    tlm.innerHTML = Object.entries(HOURS).map(([floor, h]) => {
-      const row = $(`.tl[data-floor="${floor}"]`);
-      const open = h[key].find(([a, b]) => mins >= a && mins < b);
-      const next = h[key].find(([a]) => mins < a);
-      const count = open ? `Zavírá za <b>${span(open[1] - mins)}</b>`
-        : next ? `Otevírá za <b>${span(next[0] - mins)}</b>`
-          : `Otevře zítra v <b>${fmt(h[tomorrowKey][0][0])}</b>`;
-      const line = (k, label) => `<div class="${k === key ? 'is-today' : ''}"><dt>${label}</dt><dd>${slotsText(h[k])}</dd></div>`;
-      return `<article class="tlm__card${open ? ' is-open' : ''}">
-        <header><h3>${$('strong', row).textContent}</h3><span class="tlm__state"><i></i>${open ? 'Otevřeno' : 'Zavřeno'}</span></header>
-        <p class="tlm__count">${count}</p>
-        <p class="tlm__what">${$('small', row).textContent}</p>
-        <dl>${line('week', 'Po–Pá')}${line('weekend', 'So–Ne, svátky')}</dl>
-        ${NOTE[floor] ? `<p class="tlm__note">${NOTE[floor]}</p>` : ''}
-      </article>`;
-    }).join('');
-  };
   let drawnKey = null;
   const updateStatus = () => {
-    const { key, mins, day } = pragueNow();
+    const { key, mins } = pragueNow();
     let anyOpen = false, nextOpen = null;
     Object.entries(HOURS).forEach(([floor, h]) => {
       const el = $(`.tl[data-floor="${floor}"]`);
       const bar = $('.tl__bar', el);
       const slots = h[key];
       if (drawnKey !== key) {
-        $$('.tl__seg, .tl__t, .tl__past', bar).forEach((s) => s.remove());
+        $$('.tl__seg, .tl__t', bar).forEach((s) => s.remove());
         slots.forEach(([a, b]) => {
           const seg = document.createElement('span');
           seg.className = 'tl__seg';
           seg.style.left = `${pct(a)}%`;
           seg.style.width = `${pct(b) - pct(a)}%`;
           bar.prepend(seg);
-          const past = document.createElement('span');
-          past.className = 'tl__past';
-          past.dataset.a = a; past.dataset.b = b;
-          past.style.left = `${pct(a)}%`;
-          seg.after(past);
           // Opening time under the start of the bar, closing time under its end
           [[a, ''], [b, ' tl__t--end']].forEach(([m, mod]) => {
             const t = document.createElement('span');
@@ -378,7 +343,6 @@
           });
         });
       }
-      $$('.tl__past', bar).forEach((p) => { p.style.width = `${pct(Math.min(Math.max(mins, +p.dataset.a), +p.dataset.b)) - pct(+p.dataset.a)}%`; });
       const open = slots.find(([a, b]) => mins >= a && mins < b);
       const next = slots.find(([a]) => mins < a);
       anyOpen = anyOpen || !!open;
@@ -387,7 +351,6 @@
       $('.tl__state', el).textContent = open ? `Otevřeno do ${fmt(open[1])}` : next ? `Otevíráme v ${fmt(next[0])}` : 'Dnes už zavřeno';
     });
     drawnKey = key;
-    renderCards(key, mins, day);
     placeNow(mins);
     root.classList.toggle('is-open-now', anyOpen);
     $('[data-status]').textContent = anyOpen ? 'Právě otevřeno' : nextOpen !== null ? `Otevíráme v ${fmt(nextOpen)}` : 'Teď zavřeno';
@@ -402,7 +365,6 @@
     reveal.unobserve(en.target);
   }), { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
   $$('.rv').forEach((el) => reveal.observe(el));
-  reveal.observe(tlm);
 
   const navLinks = $$('.top__nav a, .tabs a[href^="#"]');
   const tabs = $('#tabs');
