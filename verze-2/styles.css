@@ -416,8 +416,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .panel__foot button:active { opacity: .55; }
 }
 
-/* Phone: the "now" line runs behind the row text and time labels but in front of the white bars */
+/* Phone: the "now" line is in front of the white bars but breaks at text. Each piece of text
+   sits above the line on a patch of page colour exactly its own size, so the line stops at
+   the top of the letters and picks up again below them. */
 @media (max-width: 860px) {
   .tl__who, .tl__state { position: relative; z-index: 3; }
-  .tl__t { z-index: 3; }
+  .tl__who strong, .tl__who small { width: fit-content; background: var(--bg); }
+  .tl__who strong { line-height: 1.2; }
+  .tl__who small { line-height: 1.35; }
+  .tl__state { background: var(--bg); line-height: 1.2; }
+  .tl__t { z-index: 3; background: var(--bg); }
 }
