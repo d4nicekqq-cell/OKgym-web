@@ -88,7 +88,8 @@
   let cur = -1, timer, heroVisible = true;
   const queue = () => {
     clearTimeout(timer);
-    if (heroVisible) timer = setTimeout(() => slide((cur + 1) % slides.length), 4200);
+    // Phones drive the slides from the scroll position instead of a timer (see onScroll)
+    if (heroVisible && !mobile.matches) timer = setTimeout(() => slide((cur + 1) % slides.length), 4200);
   };
   const slide = (i) => {
     if (i === cur) return;
@@ -118,6 +119,12 @@
     ticking = false;
     const y = scrollY, vh = innerHeight;
     top.classList.toggle('is-stuck', y > vh * 0.6);
+    // Phones: scrolling down steps Trénink -> Adrenalin -> Regenerace and holds the last one
+    // once the hero is gone; scrolling back up plays the same steps in reverse.
+    if (mobile.matches) {
+      const p = y / hero.offsetHeight;
+      slide(p < 0.1 ? 0 : p < 0.34 ? 1 : 2);
+    }
     // Scroll-linked effects are desktop only: on phones they fight the browser's own scrolling
     if (reduced || mobile.matches) return;
     if (y < vh) {
@@ -409,8 +416,8 @@
     if (root.classList.contains('is-ready')) return;
     layoutHero(true);
     layoutBook();
-    onScroll();
     slide(0);
+    onScroll();
     if (lastMins !== null) placeNow(lastMins);
     root.classList.add('is-ready');
   };
