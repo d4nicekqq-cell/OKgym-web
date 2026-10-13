@@ -255,7 +255,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .js .rv.is-in { opacity: 1; transform: none; }
 
 .tabs { display: none; }
-.label__hint { display: none; }
 
 /* ---------- Mobile: app-like shell ---------- */
 @media (max-width: 860px) {
@@ -381,11 +380,4 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* Phone crop of the first hero photo: shift left so the head is in frame, not just the shoulder */
 @media (max-width: 860px) {
   .hero__media picture:first-child img { object-position: 34% 50%; }
-}
-
-/* Phone: one quiet hint beside the section label that rows open a detail */
-@media (max-width: 860px) {
-  .label__hint { display: inline-flex; align-items: center; gap: 8px; text-transform: none; letter-spacing: 0; font-size: .82rem; }
-  .label__hint::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); animation: hintPulse 2.2s ease-out infinite; }
-  @keyframes hintPulse { 0% { box-shadow: 0 0 0 0 rgba(248, 101, 47, .55); } 70%, 100% { box-shadow: 0 0 0 8px rgba(248, 101, 47, 0); } }
 }
