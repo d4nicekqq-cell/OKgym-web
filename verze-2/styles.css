@@ -380,29 +380,24 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .hero__media picture:first-child img { object-position: 34% 50%; }
 }
 
-/* Phone tab bar: a soft floating capsule with text only. No icons, no outline, no divider line;
-   the current tab is simply brighter, with a faint capsule sliding behind it. */
+/* Phone tab bar: four words along the bottom edge and nothing else. No shape, outline or
+   highlight; the page fades to black behind them so they stay readable over content. */
 @media (max-width: 860px) {
   .tabs {
-    left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); gap: 0; padding: 5px;
-    background: #171716; border: 0; border-radius: 999px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .55);
+    left: 0; right: 0; bottom: 0; gap: 0; padding: 28px 10px calc(8px + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, var(--bg) 58%, rgba(10, 10, 10, 0)); border: 0; border-radius: 0; box-shadow: none;
+    pointer-events: none;
   }
   .tabs a {
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    height: 44px; padding: 0; border-radius: 999px;
-    font-size: .84rem; font-weight: 600; letter-spacing: 0; text-transform: none;
+    display: flex; align-items: center; justify-content: center;
+    height: 44px; padding: 0; border-radius: 0; background: none; pointer-events: auto;
+    font-size: .88rem; font-weight: 600; letter-spacing: 0; text-transform: none;
   }
-  .tabs svg { display: none; }
-  .tabs a:active { transform: scale(.96); }
-  .tabs .tabs__book { background: var(--acc); color: #160700; }
-  .tabs__ind {
-    top: 5px; bottom: 5px; left: 5px; width: calc((100% - 10px) / 4); height: auto;
-    border-radius: 999px; background: rgba(238, 236, 230, .09);
-    transform: translateX(calc(var(--tab, 0) * 100%));
-  }
-  .hero__foot { padding-bottom: 92px; }
-  .foot { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+  .tabs svg, .tabs__ind { display: none; }
+  .tabs a:active { transform: none; opacity: .55; }
+  .tabs .tabs__book { background: none; color: var(--acc); }
+  .hero__foot { padding-bottom: 84px; }
+  .foot { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
 }
 
 /* Phone sheet: one fixed height for every activity so stepping between them never resizes it,
