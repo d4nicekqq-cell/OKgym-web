@@ -141,7 +141,7 @@
   const FX = ['fxUp', 'fxCircle', 'fxWipe', 'fxSplit', 'fxDiag'];
   list.innerHTML = ACTS.map((a, i) => `
     <li class="rv" style="--i:${i}"><button class="row" type="button" data-i="${i}">
-      <span class="row__name">${a.t}</span><span class="row__floor">${a.f}</span><span class="row__arrow" aria-hidden="true">→</span>
+      <span class="row__name">${a.t}</span><span class="row__floor">${a.f}</span><svg class="row__arrow" viewBox="0 0 44 14" aria-hidden="true"><path pathLength="1" d="M0 7h42M36 1l6 6-6 6"/></svg>
     </button></li>`).join('');
   const rows = $$('.row', list);
 
@@ -179,7 +179,9 @@
     $('.panel__desc', body).textContent = a.d;
     $('.panel__facts', body).innerHTML = a.facts.map(([n, u, l]) => `<div><b>${n}<u>${u}</u></b><span>${l}</span></div>`).join('');
     $('.panel__links', body).innerHTML = [...a.links, ['Rezervace', BOOK]]
-      .map(([l, h]) => (h[0] === '#' ? `<a href="${h}">${l} ↓</a>` : `<a href="${h}" target="_blank" rel="noopener">${l} ↗</a>`)).join('');
+      .map(([l, h]) => (h[0] === '#'
+        ? `<a href="${h}">${l}<svg class="ico" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1.5 5.5 5 9l3.5-3.5"/></svg></a>`
+        : `<a href="${h}" target="_blank" rel="noopener">${l}<svg class="ico ico--out" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 9 9 1M3 1h6v6"/></svg></a>`)).join('');
     $$('.panel__facts b', body).forEach((b, k) => { if (typeof a.facts[k][0] === 'number') roll(b, a.facts[k][0]); });
     body.classList.remove('is-swap');
     void body.offsetWidth;
