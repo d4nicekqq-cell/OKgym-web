@@ -202,10 +202,8 @@
   });
   $('#panelClose').addEventListener('click', () => sheet(false));
 
-  // Phone sheet: step through activities with the arrows or a sideways swipe on the photo
+  // Phone sheet: step through activities with a sideways swipe on the photo
   const step = (d) => show((active + d + ACTS.length) % ACTS.length);
-  $('#panelPrev').addEventListener('click', () => step(-1));
-  $('#panelNext').addEventListener('click', () => step(1));
   const onSwipe = (el, fn) => {
     let x0 = null, startY = 0;
     el.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
