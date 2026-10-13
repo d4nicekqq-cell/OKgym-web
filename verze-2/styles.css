@@ -238,11 +238,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .contact p { color: var(--dim); font-size: .92rem; max-width: 34ch; }
 
 /* ---------- Closing CTA ---------- */
-.book { position: relative; display: block; padding: 22px var(--pad) 0; overflow: hidden; }
-.book__hint { display: block; text-align: right; color: var(--dim); font-size: .9rem; }
-.book__line { display: block; font-size: min(17vw, calc(var(--max) * .17)); font-weight: 900; line-height: .86; letter-spacing: -.02em; text-transform: uppercase; }
-.book .fit { transition: color .4s; }
-.book:hover .fit { color: var(--acc); }
+.book { padding: clamp(48px, 7vw, 96px) var(--pad) clamp(56px, 8vw, 112px); }
+.book h2 { font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 800; font-stretch: 80%; line-height: 1; letter-spacing: -.01em; }
+.book p { margin: 12px 0 24px; color: var(--dim); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; background: var(--acc); border-radius: 4px; color: #160700; font-weight: 600; line-height: 1; transition: background .25s; }
+.btn:hover { background: #ff7c4a; }
 
 .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px; padding: 20px var(--pad) 26px; color: var(--dim); font-size: .84rem; }
 .foot nav { display: flex; gap: 22px; }
@@ -368,10 +368,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
     transition: transform .5s var(--ease), opacity .3s;
   }
 
-  /* Closing word rises into view */
-  .book__line { clip-path: inset(-.2em 0 0 0); }
-  .js .book .fit { transform: translateY(105%); }
-  .js .book.is-in .fit { transform: none; }
+  .book .btn { width: 100%; }
 }
 
 /* Phone crop of the first hero photo: shift left so the head is in frame, not just the shoulder */

@@ -102,16 +102,6 @@
   // Stop swapping full-screen photos once the hero is scrolled away
   new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; queue(); }).observe(hero);
 
-  /* ---------- Closing CTA (width follows scroll) ---------- */
-  const book = $('#book');
-  const bookFit = $('.fit', book);
-  const layoutBook = () => {
-    const v = fitWdth(bookFit, $('.book__line').clientWidth);
-    bookFit.style.transition = 'color .4s';
-    if (reduced || mobile.matches) setW(bookFit, v);
-    if (mobile.matches) bookFit.style.transition = 'transform 1s cubic-bezier(.16, 1, .3, 1), color .4s';
-  };
-
   /* ---------- Scroll-linked motion ---------- */
   const top = $('#topbar');
   let ticking = false;
@@ -130,11 +120,6 @@
     if (y < vh) {
       wraps.forEach((w, i) => { w.style.transform = `translate3d(${(i % 2 ? 1 : -1) * y * 0.14}px,0,0)`; });
       media.style.transform = `scale(${1 + (y / vh) * 0.14})`;
-    }
-    const r = book.getBoundingClientRect();
-    if (r.top < vh && bookFit.dataset.w) {
-      const p = Math.min(Math.max((vh - r.top) / (r.height + 80), 0), 1);
-      setW(bookFit, 62 + (bookFit.dataset.w - 62) * p);
     }
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
@@ -377,7 +362,6 @@
   const navLinks = $$('.top__nav a, .tabs a[href^="#"]');
   const tabs = $('#tabs');
   const tabLinks = $$('a', tabs);
-  new IntersectionObserver(([en]) => { if (en.isIntersecting) book.classList.add('is-in'); }, { threshold: 0.35 }).observe(book);
   // Current section = the last one whose top has passed the middle of the screen. Worked out
   // from positions on every scroll frame, so it is the same in both directions and at any speed.
   const sections = ['top', 'aktivity', 'dnes', 'ceniky', 'kontakt'].map((id) => $(`#${id}`));
@@ -417,7 +401,6 @@
   const boot = () => {
     if (root.classList.contains('is-ready')) return;
     layoutHero(true);
-    layoutBook();
     slide(0);
     onScroll();
     if (lastMins !== null) placeNow(lastMins);
@@ -431,6 +414,6 @@
     if (innerWidth === lastWidth) return;
     lastWidth = innerWidth;
     clearTimeout(rz);
-    rz = setTimeout(() => { lockHero(); layoutHero(false); layoutBook(); onScroll(); }, 120);
+    rz = setTimeout(() => { lockHero(); layoutHero(false); onScroll(); }, 120);
   });
 })();
