@@ -109,7 +109,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .hero__foot {
   display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px;
   margin-top: 18px; padding: 16px 0 22px;
-  border-top: 1px solid var(--line);
   font-size: .92rem; line-height: 1.35;
 }
 .hero__foot p { color: var(--dim); }
@@ -125,7 +124,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- Activities ---------- */
 .acts { padding: clamp(64px, 9vw, 128px) var(--pad); }
 .acts__grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(32px, 6vw, 96px); }
-.acts__list li:last-child { border-bottom: 1px solid var(--line); }
 .row {
   --wdth: 70;
   width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 14px;
@@ -159,7 +157,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .scrim { display: none; }
 
 /* ---------- Today ---------- */
-.today { padding: clamp(48px, 7vw, 96px) var(--pad); border-top: 1px solid var(--line); }
+.today { padding: clamp(48px, 7vw, 96px) var(--pad); }
 .today__title { --wdth: 70; font-size: clamp(3rem, 9vw, 8rem); font-weight: 900; line-height: .9; letter-spacing: -.02em; text-transform: uppercase; margin: 6px 0 clamp(24px, 4vw, 48px); }
 .today__title span { color: var(--dim); }
 
@@ -188,9 +186,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .fine { margin-top: 14px; color: var(--dim); font-size: .84rem; }
 
 /* ---------- Price lists (expand in place) ---------- */
-.prices { padding: clamp(48px, 7vw, 96px) var(--pad); border-top: 1px solid var(--line); }
+.prices { padding: clamp(48px, 7vw, 96px) var(--pad); }
 .acc { border-top: 1px solid var(--line); scroll-margin-top: 76px; }
-.acc:last-child { border-bottom: 1px solid var(--line); }
 .acc summary {
   --wdth: 70;
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
@@ -236,20 +233,20 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 700px) { .acc__body--week { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* ---------- Contact ---------- */
-.contact { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(28px, 5vw, 72px); padding: clamp(48px, 7vw, 96px) var(--pad); border-top: 1px solid var(--line); }
+.contact { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(28px, 5vw, 72px); padding: clamp(48px, 7vw, 96px) var(--pad); }
 .big { --wdth: 80; display: block; margin-bottom: 14px; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; line-height: 1; letter-spacing: -.01em; transition: --wdth .6s var(--ease), color .3s; }
 .big small { display: block; margin-top: 4px; font-size: .84rem; font-weight: 400; letter-spacing: 0; color: var(--dim); font-variation-settings: "wdth" 100; }
 .big:hover { --wdth: 100; color: var(--acc); }
 .contact p { color: var(--dim); font-size: .92rem; max-width: 34ch; }
 
 /* ---------- Closing CTA ---------- */
-.book { position: relative; display: block; padding: 22px var(--pad) 0; border-top: 1px solid var(--line); overflow: hidden; }
+.book { position: relative; display: block; padding: 22px var(--pad) 0; overflow: hidden; }
 .book__hint { display: block; text-align: right; color: var(--dim); font-size: .9rem; }
 .book__line { display: block; font-size: min(17vw, calc(var(--max) * .17)); font-weight: 900; line-height: .86; letter-spacing: -.02em; text-transform: uppercase; }
 .book .fit { transition: color .4s; }
 .book:hover .fit { color: var(--acc); }
 
-.foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px; padding: 20px var(--pad) 26px; border-top: 1px solid var(--line); color: var(--dim); font-size: .84rem; }
+.foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px; padding: 20px var(--pad) 26px; color: var(--dim); font-size: .84rem; }
 .foot nav { display: flex; gap: 22px; }
 .foot a:hover { color: var(--fg); }
 
