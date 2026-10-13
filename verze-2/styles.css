@@ -255,6 +255,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .js .rv.is-in { opacity: 1; transform: none; }
 
 .tabs { display: none; }
+.label__hint { display: none; }
 
 /* ---------- Mobile: app-like shell ---------- */
 @media (max-width: 860px) {
@@ -380,4 +381,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* Phone crop of the first hero photo: shift left so the head is in frame, not just the shoulder */
 @media (max-width: 860px) {
   .hero__media picture:first-child img { object-position: 34% 50%; }
+}
+
+/* Phone: show that activity rows open a detail, using the same plus sign as the price lists */
+@media (max-width: 860px) {
+  .label__hint { display: inline; text-transform: none; letter-spacing: 0; font-size: .82rem; }
+  .row { grid-template-columns: 1fr auto 14px; }
+  .row::after {
+    content: ""; align-self: center; width: 14px; height: 14px;
+    background: linear-gradient(var(--acc), var(--acc)) center / 100% 2px no-repeat, linear-gradient(var(--acc), var(--acc)) center / 2px 100% no-repeat;
+    transition: transform .4s var(--ease);
+  }
+  .sheet-open .row.is-on::after { transform: rotate(45deg); }
 }
