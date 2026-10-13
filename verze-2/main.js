@@ -182,8 +182,6 @@
 
     $('#panelTitle').textContent = a.t;
     $('#panelCount').textContent = `${i + 1} / ${ACTS.length}`;
-    $('#panelPrev span').textContent = ACTS[(i - 1 + ACTS.length) % ACTS.length].t;
-    $('#panelNext span').textContent = ACTS[(i + 1) % ACTS.length].t;
     $('.panel__desc', body).textContent = a.d;
     $('.panel__facts', body).innerHTML = a.facts.map(([n, u, l]) => `<div><b>${n}<u>${u}</u></b><span>${l}</span></div>`).join('');
     $('.panel__links', body).innerHTML = [...a.links, ['Rezervace', BOOK]]
