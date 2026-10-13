@@ -415,3 +415,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .panel__foot button { padding: 12px 0 4px; background: none; border: 0; color: var(--fg); font-size: .95rem; font-weight: 600; transition: opacity .2s; }
   .panel__foot button:active { opacity: .55; }
 }
+
+/* Phone: the "now" line runs behind the row text and time labels but in front of the white bars */
+@media (max-width: 860px) {
+  .tl__who, .tl__state { position: relative; z-index: 3; }
+  .tl__t { z-index: 3; }
+}
