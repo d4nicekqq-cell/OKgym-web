@@ -128,7 +128,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .acts__list li:last-child { border-bottom: 1px solid var(--line); }
 .row {
   --wdth: 70;
-  width: 100%; display: grid; grid-template-columns: 1fr auto 1.2em; align-items: baseline; gap: 14px;
+  width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 14px;
   padding: .26em 0 .2em;
   background: none; border: 0; border-top: 1px solid var(--line);
   color: var(--dim); text-align: left; text-transform: uppercase;
@@ -136,22 +136,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
   transition: --wdth .7s var(--ease), color .35s, padding-left .7s var(--ease);
 }
 .row__floor { font-size: .78rem; font-weight: 500; letter-spacing: .1em; font-variation-settings: "wdth" 100; color: var(--dim); }
-/* Arrow is a thin drawn line that traces itself in, not a text glyph */
-.row__arrow { width: .64em; justify-self: end; align-self: center; overflow: visible; fill: none; stroke: var(--acc); stroke-width: 1.5; stroke-linecap: square; opacity: 0; transition: opacity .25s; }
-.row__arrow path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .7s var(--ease); }
-.row.is-on .row__arrow path { stroke-dashoffset: 0; }
-.ico { width: .6em; height: .6em; margin-left: .45em; overflow: visible; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: square; transition: transform .35s var(--ease); }
-a:hover > .ico { transform: translateY(2px); }
-a:hover > .ico--out { transform: translate(2px, -2px); }
 .panel__step svg, .panel__close svg { display: block; width: 16px; height: 16px; margin: auto; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .row.is-on { --wdth: 104; color: var(--fg); }
-.row.is-on .row__arrow { opacity: 1; }
 
 .panel { position: sticky; top: 92px; align-self: start; }
 .panel__head { display: none; }
 .panel__img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #141413; border-radius: 3px; }
 .panel__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-.panel__img img.is-in { z-index: 2; animation: var(--fx, fxUp) .95s var(--ease) both; }
+.panel__img img.is-in { z-index: 2; animation: var(--fx, fxUp) .6s var(--ease) both; }
 .panel__desc { margin-top: 20px; font-size: 1.08rem; max-width: 46ch; }
 .panel__facts { display: flex; gap: clamp(20px, 3vw, 44px); margin-top: 20px; }
 .panel__facts:empty { display: none; }
@@ -160,7 +152,7 @@ a:hover > .ico--out { transform: translate(2px, -2px); }
 .panel__facts span { color: var(--dim); font-size: .82rem; }
 .panel__links { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; font-weight: 600; }
 .panel__links a:first-child { color: var(--acc); }
-.panel__body.is-swap > * { animation: up .7s var(--ease) both; }
+.panel__body.is-swap > * { animation: up .45s var(--ease) both; }
 .panel__body.is-swap > :nth-child(2) { animation-delay: .07s; }
 .panel__body.is-swap > :nth-child(3) { animation-delay: .14s; }
 @keyframes up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
@@ -292,7 +284,6 @@ a:hover > .ico--out { transform: translate(2px, -2px); }
   .row { font-size: clamp(2.3rem, 12.5vw, 3.4rem); grid-template-columns: 1fr auto; padding: .3em 0 .24em; color: var(--fg); }
   .row.is-on { --wdth: 70; }
   .row:active, .sheet-open .row.is-on { color: var(--acc); }
-  .row__arrow { display: none; }
 
   /* Detail panel becomes a bottom sheet */
   .panel {
@@ -360,16 +351,11 @@ a:hover > .ico--out { transform: translate(2px, -2px); }
   .js.is-ready .hero__foot { opacity: 1; transform: none; }
 
   /* Activity list: the row in the middle of the screen lights up and shows its arrow */
-  .row { grid-template-columns: 1fr auto 26px; gap: 10px; color: var(--dim); transition: color .35s, transform .2s; }
+  .row { grid-template-columns: 1fr auto; gap: 10px; color: var(--dim); transition: color .35s, transform .2s; }
   .row__floor { white-space: nowrap; }
   .row.is-on:not(.is-near) { color: var(--dim); }
-  .row.is-on:not(.is-near) .row__arrow { opacity: 0; }
-  .row.is-on:not(.is-near) .row__arrow path { stroke-dashoffset: 1; }
   .sheet-open .row.is-on { color: var(--acc); }
-  .row__arrow { display: block; width: 26px; stroke-width: 2.4; }
   .row.is-near { color: var(--fg); }
-  .row.is-near .row__arrow { opacity: 1; }
-  .row.is-near .row__arrow path { stroke-dashoffset: 0; }
   .row:active { transform: scale(.985); }
 
   /* Sheet: counter and previous / next */
