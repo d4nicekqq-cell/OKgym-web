@@ -384,14 +384,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
    highlight; the page fades to black behind them so they stay readable over content. */
 @media (max-width: 860px) {
   .tabs {
-    left: 0; right: 0; bottom: 0; gap: 0; padding: 28px 10px calc(8px + env(safe-area-inset-bottom));
+    left: 0; right: 0; bottom: 0; gap: 0; padding: 28px 18px calc(8px + env(safe-area-inset-bottom));
+    grid-template-columns: repeat(5, auto); justify-content: space-between;
     background: linear-gradient(to top, var(--bg) 58%, rgba(10, 10, 10, 0)); border: 0; border-radius: 0; box-shadow: none;
     pointer-events: none;
   }
   .tabs a {
     display: flex; align-items: center; justify-content: center;
     height: 44px; padding: 0; border-radius: 0; background: none; pointer-events: auto;
-    font-size: .88rem; font-weight: 600; letter-spacing: 0; text-transform: none;
+    font-size: .84rem; font-weight: 600; letter-spacing: 0; text-transform: none;
   }
   .tabs svg, .tabs__ind { display: none; }
   .tabs a:active { transform: none; opacity: .55; }
