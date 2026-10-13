@@ -39,12 +39,103 @@
       links: [["Ceník", "#cenik-solarium"]] },
   ];
 
-  /* ---------- Top bar ---------- */
+  /* ---------- Variable-width fitting: stretch each word to fill its line ---------- */
+  const setW = (el, v) => el.style.setProperty('--wdth', v);
+  const widthOf = (el) => el.getBoundingClientRect().width;
+  const fitWdth = (el, target) => {
+    el.style.transition = 'none';
+    let lo = 62, hi = 125, v;
+    setW(el, hi);
+    if (widthOf(el) <= target) v = hi;
+    else {
+      setW(el, lo);
+      if (widthOf(el) >= target) v = lo;
+      else {
+        for (let i = 0; i < 14; i++) { v = (lo + hi) / 2; setW(el, v); if (widthOf(el) > target) hi = v; else lo = v; }
+        v = lo;
+      }
+    }
+    el.dataset.w = v.toFixed(2);
+    return v;
+  };
+  const release = (el) => { void el.offsetWidth; el.style.transition = ''; };
+
+  /* ---------- Hero ---------- */
+  const hero = $('.hero');
+  const title = $('.hero__title');
+  const lines = $$('.hero .fit');
+  const wraps = $$('.hero__line');
+  const media = $('.hero__media');
+  const slides = $$('.hero__media img');
+
+  const layoutHero = (intro) => {
+    const W = title.clientWidth;
+    const H = hero.clientHeight - $('#topbar').offsetHeight - $('.hero__foot').offsetHeight - 28;
+    let fs = H / 3 / 0.84;
+    title.style.fontSize = `${fs}px`;
+    lines.forEach((l) => { l.style.transition = 'none'; setW(l, 62); });
+    const widest = Math.max(...lines.map(widthOf));
+    if (widest > W) { fs *= W / widest; title.style.fontSize = `${fs}px`; }
+    // Animating the width axis re-lays out the whole title every frame: desktop only
+    const animate = intro && !reduced && !mobile.matches;
+    lines.forEach((l) => { const v = fitWdth(l, W); setW(l, animate ? 62 : v); release(l); });
+    if (animate) {
+      lines.forEach((l, i) => { l.style.transitionDelay = `${250 + i * 110}ms`; setW(l, l.dataset.w); });
+      setTimeout(() => lines.forEach((l) => { l.style.transitionDelay = ''; }), 2200);
+    }
+  };
+
+  let cur = -1, timer, heroVisible = true;
+  const queue = () => {
+    clearTimeout(timer);
+    // Phones drive the slides from the scroll position instead of a timer (see onScroll)
+    if (heroVisible && !mobile.matches) timer = setTimeout(() => slide((cur + 1) % slides.length), 4200);
+  };
+  const slide = (i) => {
+    if (i === cur) return;
+    slides.forEach((im, k) => { im.classList.toggle('is-prev', k === cur); im.classList.toggle('is-on', k === i); });
+    lines.forEach((l, k) => l.classList.toggle('is-on', k === i));
+    cur = i;
+    queue();
+  };
+  lines.forEach((l, i) => l.addEventListener('pointerenter', () => slide(i)));
+  // Stop swapping full-screen photos once the hero is scrolled away
+  new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; queue(); }).observe(hero);
+
+  /* ---------- Closing CTA (width follows scroll) ---------- */
+  const book = $('#book');
+  const bookFit = $('.fit', book);
+  const layoutBook = () => {
+    const v = fitWdth(bookFit, $('.book__line').clientWidth);
+    bookFit.style.transition = 'color .4s';
+    if (reduced || mobile.matches) setW(bookFit, v);
+    if (mobile.matches) bookFit.style.transition = 'transform 1s cubic-bezier(.16, 1, .3, 1), color .4s';
+  };
+
+  /* ---------- Scroll-linked motion ---------- */
   const top = $('#topbar');
   let ticking = false;
   const onScroll = () => {
     ticking = false;
-    top.classList.toggle('is-stuck', scrollY > 24);
+    const y = scrollY, vh = innerHeight;
+    top.classList.toggle('is-stuck', y > vh * 0.6);
+    // Phones: scrolling down steps Trénink -> Adrenalin -> Regenerace and holds the last one
+    // once the hero is gone; scrolling back up plays the same steps in reverse.
+    if (mobile.matches) {
+      const p = y / hero.offsetHeight;
+      slide(p < 0.1 ? 0 : p < 0.34 ? 1 : 2);
+    }
+    // Scroll-linked effects are desktop only: on phones they fight the browser's own scrolling
+    if (reduced || mobile.matches) return;
+    if (y < vh) {
+      wraps.forEach((w, i) => { w.style.transform = `translate3d(${(i % 2 ? 1 : -1) * y * 0.14}px,0,0)`; });
+      media.style.transform = `scale(${1 + (y / vh) * 0.14})`;
+    }
+    const r = book.getBoundingClientRect();
+    if (r.top < vh && bookFit.dataset.w) {
+      const p = Math.min(Math.max((vh - r.top) / (r.height + 80), 0), 1);
+      setW(bookFit, 62 + (bookFit.dataset.w - 62) * p);
+    }
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
@@ -133,6 +224,7 @@
     }, { passive: true });
   };
   onSwipe($('.panel__img'), step);
+  onSwipe(hero, (d) => slide((cur + d + slides.length) % slides.length));
 
   // On phones there is no hover: the row passing the middle of the screen lights up instead
   const near = new IntersectionObserver((entries) => entries.forEach((en) => {
@@ -269,8 +361,7 @@
     drawnKey = key;
     placeNow(mins);
     root.classList.toggle('is-open-now', anyOpen);
-    const status = anyOpen ? 'Právě otevřeno' : nextOpen !== null ? `Otevíráme v ${fmt(nextOpen)}` : 'Teď zavřeno';
-    $$('[data-status]').forEach((el) => { el.textContent = status; });
+    $('[data-status]').textContent = anyOpen ? 'Právě otevřeno' : nextOpen !== null ? `Otevíráme v ${fmt(nextOpen)}` : 'Teď zavřeno';
   };
   updateStatus();
   setInterval(updateStatus, 60_000);
@@ -286,6 +377,7 @@
   const navLinks = $$('.top__nav a, .tabs a[href^="#"]');
   const tabs = $('#tabs');
   const tabLinks = $$('a', tabs);
+  new IntersectionObserver(([en]) => { if (en.isIntersecting) book.classList.add('is-in'); }, { threshold: 0.35 }).observe(book);
   // Current section = the last one whose top has passed the middle of the screen. Worked out
   // from positions on every scroll frame, so it is the same in both directions and at any speed.
   const sections = ['top', 'aktivity', 'dnes', 'ceniky', 'kontakt'].map((id) => $(`#${id}`));
@@ -324,6 +416,9 @@
 
   const boot = () => {
     if (root.classList.contains('is-ready')) return;
+    layoutHero(true);
+    layoutBook();
+    slide(0);
     onScroll();
     if (lastMins !== null) placeNow(lastMins);
     root.classList.add('is-ready');
@@ -336,6 +431,6 @@
     if (innerWidth === lastWidth) return;
     lastWidth = innerWidth;
     clearTimeout(rz);
-    rz = setTimeout(() => { lockHero(); onScroll(); }, 120);
+    rz = setTimeout(() => { lockHero(); layoutHero(false); layoutBook(); onScroll(); }, 120);
   });
 })();
