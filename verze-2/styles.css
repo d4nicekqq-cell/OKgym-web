@@ -111,8 +111,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .hero__foot p { color: var(--dim); }
 .hero__cta { justify-self: end; font-weight: 600; }
-.hero__cta span { display: inline-block; margin-left: 6px; color: var(--fg); font-size: .8em; font-weight: 900; animation: bob 1.6s var(--ease) infinite alternate; }
-@keyframes bob { to { transform: translateY(5px); } }
+.hero__cta { display: inline-flex; align-items: center; gap: 7px; }
+.hero__cta svg { width: .72em; height: .72em; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; }
 
 /* ---------- Section label ---------- */
 .label { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; color: var(--dim); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
