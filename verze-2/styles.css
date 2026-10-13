@@ -168,12 +168,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .tl__t--end { transform: translateX(-100%); }
 .tl.is-in .tl__t { opacity: 1; }
 .tls { position: relative; }
-.tls__now::after { content: attr(data-time); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); color: var(--acc); font-size: .8rem; font-style: normal; font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; }
+.tls__now::after { content: attr(data-time); position: absolute; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); color: var(--acc); font-size: .8rem; font-style: normal; font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; }
 .tl__seg { position: absolute; top: 0; bottom: 0; background: var(--fg); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.3s var(--ease) .15s; }
 .tl.is-in .tl__seg { transform: none; }
 .tl__seg + .tl__seg { transition-delay: .4s; }
 .tls__now { position: absolute; left: 0; top: 0; width: 2px; transform-origin: 50% 0; background: var(--acc); z-index: 2; opacity: 0; transform: scaleY(0); transition: transform .6s var(--ease) 1s, opacity .2s 1s; }
-.tls__now::before { content: ""; position: absolute; left: -3px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--acc); }
 .tls.has-now:has(.tl.is-in) .tls__now { opacity: 1; transform: none; }
 .tl__state { text-align: right; font-weight: 600; color: var(--dim); }
 .tl.is-open .tl__state { color: var(--ok); }
