@@ -78,7 +78,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- Hero ---------- */
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
-  height: 100svh; min-height: 520px;
+  height: var(--hero-h, 100svh); min-height: 520px;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 0 var(--pad);
 }

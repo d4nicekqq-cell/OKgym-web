@@ -395,6 +395,16 @@
   updateSpy();
 
   /* ---------- Boot ---------- */
+  // On phones the browser bars slide in and out while scrolling, which changes the viewport
+  // height. In-app browsers resize the page for it, so a hero sized in viewport units would
+  // change height mid-scroll and make everything below it jump. Fix its height in pixels and
+  // only re-measure when the width changes (rotation).
+  const touchDevice = matchMedia('(pointer: coarse)').matches;
+  const lockHero = () => {
+    if (touchDevice || mobile.matches) root.style.setProperty('--hero-h', `${innerHeight}px`);
+  };
+  lockHero();
+
   const boot = () => {
     if (root.classList.contains('is-ready')) return;
     layoutHero(true);
@@ -412,6 +422,6 @@
     if (innerWidth === lastWidth) return;
     lastWidth = innerWidth;
     clearTimeout(rz);
-    rz = setTimeout(() => { layoutHero(false); layoutBook(); onScroll(); }, 120);
+    rz = setTimeout(() => { lockHero(); layoutHero(false); layoutBook(); onScroll(); }, 120);
   });
 })();
