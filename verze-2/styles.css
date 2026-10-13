@@ -61,9 +61,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .top.is-stuck { background: rgba(10, 10, 10, .8); backdrop-filter: blur(14px); }
 .top__logo img { height: 40px; width: auto; }
 .top__status { display: flex; align-items: center; gap: 8px; color: var(--dim); }
-.top__status i { width: 7px; height: 7px; border-radius: 50%; background: #55544f; }
 .is-open-now .top__status { color: var(--fg); }
-.is-open-now .top__status i, .is-open-now .tabs__open::after { background: var(--ok); animation: ping 2s infinite; }
 @keyframes ping { from { box-shadow: 0 0 0 0 rgba(95, 224, 138, .6); } to { box-shadow: 0 0 0 8px rgba(95, 224, 138, 0); } }
 .top__nav { display: flex; gap: 26px; margin-left: auto; }
 .top__nav a, .u, .panel__links a, .foot a {
@@ -113,7 +111,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .hero__foot p { color: var(--dim); }
 .hero__cta { justify-self: end; font-weight: 600; }
-.hero__cta span { display: inline-block; margin-left: 6px; color: var(--acc); animation: bob 1.6s var(--ease) infinite alternate; }
+.hero__cta span { display: inline-block; margin-left: 6px; color: var(--fg); font-size: .8em; font-weight: 900; animation: bob 1.6s var(--ease) infinite alternate; }
 @keyframes bob { to { transform: translateY(5px); } }
 
 /* ---------- Section label ---------- */
@@ -139,6 +137,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .panel { position: sticky; top: 92px; align-self: start; }
 .panel__head { display: none; }
+.panel__foot { display: none; }
 .panel__img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #141413; border-radius: 3px; }
 .panel__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
 .panel__img img.is-in { z-index: 2; animation: var(--fx, fxUp) .6s var(--ease) both; }
@@ -320,7 +319,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .tabs a:active { transform: scale(.94); }
   .tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .tabs a.is-current { color: var(--fg); background: rgba(238, 236, 230, .09); }
-  .tabs__open::after { content: ""; position: absolute; top: 7px; left: calc(50% + 9px); width: 6px; height: 6px; border-radius: 50%; background: #55544f; }
   .tabs .tabs__book { background: var(--acc); color: #160700; }
 }
 
@@ -397,7 +395,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
   }
   .tabs svg { display: none; }
   .tabs a:active { transform: scale(.96); }
-  .tabs__open::after { position: static; flex: none; }
   .tabs .tabs__book { background: var(--acc); color: #160700; }
   .tabs__ind {
     top: 5px; bottom: 5px; left: 5px; width: calc((100% - 10px) / 4); height: auto;
@@ -406,4 +403,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
   }
   .hero__foot { padding-bottom: 92px; }
   .foot { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+}
+
+/* Phone sheet: one fixed height for every activity so stepping between them never resizes it,
+   with previous / next named at the bottom. */
+@media (max-width: 860px) {
+  .panel { display: flex; flex-direction: column; height: min(640px, 88svh); max-height: none; }
+  .panel__head, .panel__img, .panel__body { flex: none; }
+  .panel__foot { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; padding-top: 18px; }
+  .panel__foot button { padding: 8px 0; background: none; border: 0; text-align: left; transition: opacity .2s; }
+  .panel__foot button:last-child { text-align: right; }
+  .panel__foot button:active { opacity: .55; }
+  .panel__foot small { display: block; margin-bottom: 2px; color: var(--dim); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; }
+  .panel__foot span { display: block; font-size: 1.35rem; font-weight: 800; font-stretch: 75%; line-height: 1.1; text-transform: uppercase; }
 }
