@@ -382,26 +382,28 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .hero__media picture:first-child img { object-position: 34% 50%; }
 }
 
-/* Phone tab bar: a flat strip on the bottom edge, text only. The current tab is marked by a
-   thin accent line that slides along the top; no floating pill, icons or rounded highlight. */
+/* Phone tab bar: a soft floating capsule with text only. No icons, no outline, no divider line;
+   the current tab is simply brighter, with a faint capsule sliding behind it. */
 @media (max-width: 860px) {
   .tabs {
-    left: 0; right: 0; bottom: 0; gap: 0; padding: 0 0 env(safe-area-inset-bottom);
-    background: var(--bg); border: 0; border-top: 1px solid var(--line); border-radius: 0;
+    left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); gap: 0; padding: 5px;
+    background: #171716; border: 0; border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .55);
   }
   .tabs a {
-    display: flex; align-items: center; justify-content: center; gap: 7px;
-    height: 54px; padding: 0; border-radius: 0;
-    font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    height: 44px; padding: 0; border-radius: 999px;
+    font-size: .84rem; font-weight: 600; letter-spacing: 0; text-transform: none;
   }
   .tabs svg { display: none; }
-  .tabs a:active { transform: none; opacity: .6; }
+  .tabs a:active { transform: scale(.96); }
   .tabs__open::after { position: static; flex: none; }
   .tabs .tabs__book { background: var(--acc); color: #160700; }
   .tabs__ind {
-    top: -1px; bottom: auto; left: 0; width: 25%; height: 2px; border-radius: 0; background: var(--acc);
+    top: 5px; bottom: 5px; left: 5px; width: calc((100% - 10px) / 4); height: auto;
+    border-radius: 999px; background: rgba(238, 236, 230, .09);
     transform: translateX(calc(var(--tab, 0) * 100%));
   }
-  .hero__foot { padding-bottom: 76px; }
-  .foot { padding-bottom: calc(78px + env(safe-area-inset-bottom)); }
+  .hero__foot { padding-bottom: 92px; }
+  .foot { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
 }
