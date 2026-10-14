@@ -129,7 +129,6 @@
   const panel = $('#panel');
   const body = $('#panelBody');
   const layers = $$('.panel__img img');
-  const FX = ['fxUp', 'fxCircle', 'fxWipe', 'fxSplit', 'fxDiag'];
   list.innerHTML = ACTS.map((a, i) => `
     <li class="rv" style="--i:${i}"><button class="row" type="button" data-i="${i}">
       <span class="row__name">${a.t}</span><span class="row__floor">${a.f}</span>
@@ -158,7 +157,6 @@
 
     const next = layers[flip], prev = layers[flip ^ 1];
     flip ^= 1;
-    next.style.setProperty('--fx', FX[i % FX.length]);
     next.src = srcOf(a);
     prev.classList.remove('is-in');
     next.classList.remove('is-in');
