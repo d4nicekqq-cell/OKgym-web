@@ -112,7 +112,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .label__h { color: var(--dim); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 18px; }
 
 /* ---------- Activities ---------- */
-.acts { padding: clamp(64px, 9vw, 128px) var(--pad); }
+.acts { padding: clamp(52px, 7.2vw, 104px) var(--pad); }
 .acts__grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(32px, 6vw, 96px); }
 .row {
   --wdth: 70;
@@ -148,7 +148,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .scrim { display: none; }
 
 /* ---------- Today ---------- */
-.today { padding: clamp(48px, 7vw, 96px) var(--pad); }
+.today { padding: clamp(40px, 5.6vw, 78px) var(--pad); }
 .today__title { --wdth: 70; font-size: clamp(3rem, 9vw, 8rem); font-weight: 900; line-height: .9; letter-spacing: -.02em; text-transform: uppercase; margin: 6px 0 clamp(24px, 4vw, 48px); }
 .today__title span { color: var(--dim); }
 
@@ -176,7 +176,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .fine { margin-top: 14px; color: var(--dim); font-size: .84rem; }
 
 /* ---------- Price lists (expand in place) ---------- */
-.prices { padding: clamp(48px, 7vw, 96px) var(--pad); }
+.prices { padding: clamp(40px, 5.6vw, 78px) var(--pad); }
 .acc { border-top: 1px solid var(--line); scroll-margin-top: 76px; }
 .acc summary {
   --wdth: 70;
@@ -224,14 +224,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 700px) { .acc__body--week { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* ---------- Contact ---------- */
-.contact { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(28px, 5vw, 72px); padding: clamp(48px, 7vw, 96px) var(--pad); }
+.contact { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(28px, 5vw, 72px); padding: clamp(40px, 5.6vw, 78px) var(--pad); }
 .big { --wdth: 80; display: block; margin-bottom: 14px; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; line-height: 1; letter-spacing: -.01em; transition: --wdth .6s var(--ease), color .3s; }
 .big small { display: block; margin-top: 4px; font-size: .84rem; font-weight: 400; letter-spacing: 0; color: var(--dim); font-variation-settings: "wdth" 100; }
 .big:hover { --wdth: 100; color: var(--acc); }
 .contact p { color: var(--dim); font-size: .92rem; max-width: 34ch; }
 
 /* ---------- Closing CTA ---------- */
-.book { padding: clamp(48px, 7vw, 96px) var(--pad) clamp(56px, 8vw, 112px); }
+.book { padding: clamp(40px, 5.6vw, 78px) var(--pad) clamp(46px, 6.4vw, 90px); }
 .book h2 { font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 800; font-stretch: 80%; line-height: 1; letter-spacing: -.01em; }
 .book p { margin: 12px 0 24px; color: var(--dim); }
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; background: var(--acc); border-radius: 4px; color: #160700; font-weight: 600; line-height: 1; transition: background .25s; }
