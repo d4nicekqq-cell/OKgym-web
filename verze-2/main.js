@@ -284,6 +284,20 @@
   const weekday = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Prague" })).getDay();
   $$("[data-weekday]").forEach((t) => t.classList.toggle("is-today", +t.dataset.weekday === weekday));
 
+  // Phones show the timetable one day at a time: a row of day names above it, today picked first
+  const week = $('.acc__body--week');
+  const dayTables = $$('.pt', week);
+  const days = document.createElement('div');
+  days.className = 'days';
+  days.innerHTML = dayTables.map((t) => `<button type="button">${$('caption', t).textContent.slice(0, 2)}</button>`).join('');
+  week.prepend(days);
+  const pickDay = (i) => {
+    dayTables.forEach((t, k) => t.classList.toggle('is-shown', k === i));
+    $$('button', days).forEach((b, k) => b.classList.toggle('is-on', k === i));
+  };
+  $$('button', days).forEach((b, i) => b.addEventListener('click', () => pickDay(i)));
+  pickDay(Math.max(0, dayTables.findIndex((t) => t.classList.contains('is-today'))));
+
   // One "now" line running through both rows, with the current time above it
   const tls = $("#tls");
   const nowLine = $("#nowLine");

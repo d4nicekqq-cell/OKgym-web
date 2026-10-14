@@ -211,6 +211,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* Schedule: one box per day, side by side like a timetable */
 .acc__body--week { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 28px 10px; }
+.days { display: none; }
 .acc__body--week .pt { padding: 2px 12px 6px; border: 1px solid var(--line); border-radius: 4px; background: #121211; }
 .acc__body--week .pt tr { display: flex; flex-direction: column-reverse; padding: 9px 0; border-top: 1px solid var(--line); }
 .acc__body--week .pt tr:first-child { border-top: 0; }
@@ -420,3 +421,23 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* Neighbouring sections each add their own padding, which doubled the gap between them.
    Keep the bottom padding and give the next section only a short top padding. */
 .today, .prices, .contact, .book { padding-top: clamp(16px, 2.4vw, 34px); }
+
+/* Phone price lists: the open list's name stays pinned under the top bar so it can be closed
+   from anywhere, notes read left to right, and the timetable shows one day at a time. */
+@media (max-width: 860px) {
+  .acc[open] summary { position: sticky; top: 54px; z-index: 5; background: var(--bg); }
+  .acc__body { gap: 28px; padding-bottom: 40px; }
+  .acc__note { justify-self: start; text-align: left; }
+  .pt caption { font-size: 1.1rem; }
+  .pt th, .pt td { padding: 13px 0; }
+
+  .acc__body--week { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .days { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(7, 1fr); }
+  .days button { height: 46px; padding: 0; background: none; border: 0; border-bottom: 1px solid var(--line); color: var(--dim); font-size: .95rem; font-weight: 600; }
+  .days button.is-on { color: var(--fg); border-bottom: 2px solid var(--fg); }
+  .acc__body--week .pt:not(.is-shown) { display: none; }
+  .acc__body--week .pt { padding: 4px 16px 8px; }
+  .acc__body--week .pt caption { padding-top: 6px; }
+  .acc__body--week .pt th { font-size: 1.05rem; }
+  .acc__body--week .pt td { font-size: .9rem; }
+}
