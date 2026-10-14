@@ -435,6 +435,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .days { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(7, 1fr); }
   .days button { height: 46px; padding: 0; background: none; border: 0; border-bottom: 1px solid var(--line); color: var(--dim); font-size: .95rem; font-weight: 600; }
   .days button.is-on { color: var(--fg); border-bottom: 2px solid var(--fg); }
+  .days button.is-today { color: var(--acc); }
+  .days button.is-today.is-on { border-bottom-color: var(--acc); }
+  .acc__body--week .pt.is-today { border-color: var(--line); }
   .acc__body--week .pt:not(.is-shown) { display: none; }
   .acc__body--week .pt { padding: 4px 16px 8px; }
   .acc__body--week .pt caption { padding-top: 6px; }

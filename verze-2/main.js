@@ -289,7 +289,7 @@
   const dayTables = $$('.pt', week);
   const days = document.createElement('div');
   days.className = 'days';
-  days.innerHTML = dayTables.map((t) => `<button type="button">${$('caption', t).textContent.slice(0, 2)}</button>`).join('');
+  days.innerHTML = dayTables.map((t) => `<button type="button"${t.classList.contains('is-today') ? ' class="is-today"' : ''}>${$('caption', t).textContent.slice(0, 2)}</button>`).join('');
   week.prepend(days);
   const pickDay = (i) => {
     dayTables.forEach((t, k) => t.classList.toggle('is-shown', k === i));
