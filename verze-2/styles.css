@@ -188,12 +188,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .acc summary::-webkit-details-marker { display: none; }
 .acc summary::after {
-  content: ""; flex: none; width: .42em; height: .42em;
-  background: linear-gradient(var(--acc), var(--acc)) center / 100% 2px no-repeat, linear-gradient(var(--acc), var(--acc)) center / 2px 100% no-repeat;
-  transition: transform .5s var(--ease);
+  content: ""; flex: none; width: 10px; height: 10px; margin: 0 4px 6px 0;
+  border: solid var(--dim); border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg); transition: transform .4s var(--ease), border-color .3s;
 }
 .acc summary:hover, .acc[open] summary { --wdth: 100; color: var(--fg); }
-.acc[open] summary::after { transform: rotate(45deg); }
+.acc[open] summary::after { margin-bottom: -4px; transform: rotate(-135deg); }
+.acc summary:hover::after, .acc[open] summary::after { border-color: var(--fg); }
 /* Every list is a centred row of titled boxes; each box is one group of prices */
 .acc__body { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 376px)); justify-content: center; align-items: start; gap: 32px 24px; padding: 22px 0 52px; }
 .acc__body:has(> .pt:only-of-type) { grid-template-columns: minmax(280px, 560px); }
