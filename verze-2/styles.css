@@ -5,7 +5,7 @@
   --fg: #eeece6;
   --dim: #8a8983;
   --line: rgba(238, 236, 230, .14);
-  --acc: #f8652f;
+  --acc: #fd8800;
   --ok: #5fe08a;
   --max: 1240px;
   /* Side padding grows on wide screens so content never exceeds --max */
@@ -242,7 +242,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .book h2 { font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 800; font-stretch: 80%; line-height: 1; letter-spacing: -.01em; }
 .book p { margin: 12px 0 24px; color: var(--dim); }
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; background: var(--acc); border-radius: 4px; color: #160700; font-weight: 600; line-height: 1; transition: background .25s; }
-.btn:hover { background: #ff7c4a; }
+.btn:hover { background: #ff9a26; }
 
 .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px; padding: 20px var(--pad) 26px; color: var(--dim); font-size: .84rem; }
 .foot nav { display: flex; gap: 22px; }
