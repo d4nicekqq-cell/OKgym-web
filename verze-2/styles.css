@@ -416,3 +416,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .tl__state { background: var(--bg); line-height: 1.2; }
   .tl__t { z-index: 3; background: var(--bg); }
 }
+
+/* Neighbouring sections each add their own padding, which doubled the gap between them.
+   Keep the bottom padding and give the next section only a short top padding. */
+.today, .prices, .contact, .book { padding-top: clamp(16px, 2.4vw, 34px); }
