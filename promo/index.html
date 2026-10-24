@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OK GYM promo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; height: 100%; background: #000; }
+  body { display: grid; place-items: center; }
+  canvas { height: 100vh; width: auto; max-width: 100vw; background: #0a0a0a; }
+  #status { position: fixed; left: 8px; bottom: 8px; color: #888; font: 12px system-ui; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div id="status"></div>
+<script>
+// 30 s Instagram Reels promo, 1080 × 1920, 30 fps. Everything is drawn by render(t), so the
+// same code plays live in the browser and exports frame by frame (?export) for ffmpeg.
+const W = 1080, H = 1920, FPS = 30, DUR = 30;
+const FG = '#eeece6', MUTED = '#a9a8a1', ACC = '#fd8800', BG = '#0a0a0a';
+const PAD = 84, CW = W - 2 * PAD;
+const c = document.getElementById('c'), x = c.getContext('2d');
+
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const out4 = (p) => 1 - Math.pow(1 - p, 4);
+const inOut = (p) => (p < 0.5 ? 8 * p ** 4 : 1 - Math.pow(-2 * p + 2, 4) / 2);
+const dimFg = (on) => `rgba(238, 236, 230, ${0.16 + 0.84 * on})`;
+
+const font = (size, weight = 900, stretch = 'condensed') => {
+  x.font = `${stretch} ${weight} ${size}px Archivo`;
+  x.fontStretch = stretch;
+};
+const widthAt = (text, size, weight, stretch) => { font(size, weight, stretch); return x.measureText(text).width; };
+const fitSize = (text, width, weight = 900, stretch = 'condensed', max = 1e9) =>
+  Math.min(max, (100 * width) / widthAt(text, 100, weight, stretch));
+
+// Text that rises out of a mask (pin 0→1) and leaves upward through it (pout 0→1)
+function rise(text, X, base, size, color, pin, pout = 0, o = {}) {
+  if (pin <= 0 || pout >= 1) return;
+  const { weight = 900, stretch = 'condensed', align = 'left', sx = 1, drop = 0.27 } = o;
+  const top = base - size * 1.05, h = size * (1.05 + drop);
+  x.save();
+  x.beginPath(); x.rect(0, top, W, h); x.clip();
+  const dy = (1 - out4(pin)) * h - inOut(pout) * h;
+  font(size, weight, stretch);
+  x.fillStyle = color; x.textAlign = align; x.textBaseline = 'alphabetic';
+  x.translate(X, base + dy); x.scale(sx, 1);
+  x.fillText(text, 0, 0);
+  x.restore();
+}
+
+// Fill the content width with a word at a fixed size: pick the nearest font width, then scale the rest
+const STRETCHES = ['extra-condensed', 'condensed', 'semi-condensed', 'normal', 'semi-expanded', 'expanded'];
+function fillWidth(text, size) {
+  let best = STRETCHES[0];
+  for (const s of STRETCHES) if (widthAt(text, size, 900, s) <= CW) best = s;
+  return { stretch: best, sx: CW / widthAt(text, size, 900, best) };
+}
+
+// Full-screen orange panel that sweeps up over one scene and off the top into the next
+function wipe(t, a) {
+  const k = inOut(seg(t, a, a + 0.35)), m = inOut(seg(t, a + 0.35, a + 0.7));
+  if (k <= 0 || m >= 1) return;
+  // First half: the panel rises from the bottom edge. Second half: its bottom edge follows it off the top.
+  const top = H * (1 - k), bottom = H * (1 - m);
+  x.fillStyle = ACC;
+  x.fillRect(0, m > 0 ? 0 : top, W, (m > 0 ? bottom : H) - (m > 0 ? 0 : top));
+}
+
+/* ---------- Scenes ---------- */
+
+function intro(t) {
+  const lineIn = out4(seg(t, 0.1, 0.8)), lineOut = inOut(seg(t, 2.75, 3.15));
+  const y = 1000;
+  x.fillStyle = ACC;
+  x.fillRect(PAD + CW * lineOut, y, CW * lineIn - CW * lineOut, 6);
+  const s = fitSize('OK GYM', CW, 900, 'normal', 300);
+  rise('OK GYM', PAD, y - 40, s, ACC, seg(t, 0.35, 1.15), seg(t, 2.7, 3.1), { stretch: 'normal' });
+  rise('Fitcentrum Pardubice', PAD, y + 92, 54, FG, seg(t, 0.7, 1.4), seg(t, 2.75, 3.15), { weight: 400, stretch: 'normal' });
+}
+
+const WORDS = ['TRÉNINK', 'ADRENALIN', 'REGENERACE'];
+const ACTIVE = [[3.7, 5.8], [5.8, 7.9], [7.9, 10.2]];
+function words(t) {
+  const s = fitSize('REGENERACE', CW, 900, 'condensed');
+  const lh = s * 0.9, first = 960 - lh * 1.5 + s * 0.78;
+  WORDS.forEach((w, i) => {
+    const [a, b] = ACTIVE[i];
+    const on = seg(t, a, a + 0.35) - seg(t, b, b + 0.35);
+    const { stretch, sx } = fillWidth(w, s);
+    const base = first + i * lh;
+    rise(w, PAD, base, s, dimFg(on), seg(t, 3.2 + i * 0.12, 4.0 + i * 0.12), 0, { stretch, sx, drop: 0.02 });
+    // Orange rule under the word that is on, filling while it stays on
+    if (t > a && t < b + 0.35) {
+      const p = out4(seg(t, a, b)), fade = 1 - seg(t, b, b + 0.35);
+      x.fillStyle = `rgba(253, 136, 0, ${fade})`;
+      x.fillRect(PAD, base + s * 0.06, CW * p, 6);
+    }
+  });
+}
+
+const ACTS = [
+  ['1. patro', 'POSILOVNA', '800 m² · 90+ stanovišť · 60 strojů'],
+  ['1. patro', 'BOX', 'Ring, pytle, lapy · sál 700 m²'],
+  ['Přízemí', 'LEZENÍ', 'Stěna 8 m · boulder · MoonBoard'],
+  ['Přízemí', 'LEKCE', 'Bungee · H.E.A.T. · Tabata · pilates · jóga'],
+  ['Přízemí', 'SAUNY', 'Finská 90 °C · bio 70 °C · infrasauna'],
+  ['Přízemí', 'MASÁŽE', 'Po tréninku, lezení i sauně'],
+  ['1. patro', 'SOLÁRIUM', 'Ergoline Inspiration 400'],
+];
+const ACT0 = 10.35, ACTD = 1.3;
+function activities(t) {
+  ACTS.forEach(([floor, name, fact], i) => {
+    const u = t - (ACT0 + i * ACTD);
+    if (u < 0 || u > ACTD + 0.3) return;
+    const s = fitSize(name, CW, 900, 'condensed', 330);
+    const base = 1080;
+    rise(floor, PAD, base - s - 40, 48, MUTED, seg(u, 0, 0.45), seg(u, 1.05, 1.3), { weight: 500, stretch: 'normal' });
+    rise(name, PAD, base, s, FG, seg(u, 0.03, 0.5), seg(u, 1.05, 1.3));
+    rise(fact, PAD, base + 100, 46, FG, seg(u, 0.12, 0.6), seg(u, 1.05, 1.3), { weight: 400, stretch: 'normal' });
+  });
+  // Seven short marks along the bottom of the content, one per activity
+  const p = seg(t, ACT0 - 0.2, ACT0 + 0.3) - seg(t, ACT0 + ACTS.length * ACTD - 0.1, ACT0 + ACTS.length * ACTD + 0.2);
+  if (p > 0) {
+    const gap = 12, w = (CW - gap * 6) / 7, cur = Math.floor((t - ACT0) / ACTD);
+    for (let i = 0; i < 7; i++) {
+      x.fillStyle = i === cur ? ACC : i < cur ? 'rgba(238, 236, 230, .55)' : 'rgba(238, 236, 230, .16)';
+      x.globalAlpha = p;
+      x.fillRect(PAD + i * (w + gap), 1400, w, 5);
+    }
+    x.globalAlpha = 1;
+  }
+}
+
+const H0 = 6 * 60, H1 = 23 * 60;
+const px = (m) => PAD + (CW * (m - H0)) / (H1 - H0);
+const fmt = (m) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+function bar(u, y, label, a, b, delay) {
+  rise(label, PAD, y - 40, 54, FG, seg(u, delay - 0.2, delay + 0.3), 0, { weight: 700, stretch: 'normal' });
+  const show = seg(u, delay, delay + 0.3);
+  x.globalAlpha = show;
+  x.fillStyle = 'rgba(238, 236, 230, .08)';
+  x.fillRect(PAD, y, CW, 26);
+  x.fillStyle = FG;
+  x.fillRect(px(a), y, (px(b) - px(a)) * out4(seg(u, delay + 0.1, delay + 1.2)), 26);
+  x.globalAlpha = seg(u, delay + 0.9, delay + 1.3);
+  font(40, 400, 'normal'); x.fillStyle = MUTED; x.textBaseline = 'alphabetic';
+  x.textAlign = 'left'; x.fillText(fmt(a), px(a), y + 76);
+  x.textAlign = 'right'; x.fillText(fmt(b), px(b), y + 76);
+  x.globalAlpha = 1;
+}
+function hours(t) {
+  const u = t - 19.6;
+  if (u < 0) return;
+  rise('OTEVÍRACÍ DOBA', PAD, 640, fitSize('OTEVÍRACÍ DOBA', CW, 900, 'condensed', 170), FG, seg(u, 0, 0.6));
+  rise('Pondělí – pátek', PAD, 740, 48, MUTED, seg(u, 0.15, 0.7), 0, { weight: 400, stretch: 'normal' });
+  bar(u, 900, '1. patro', 7 * 60, 21 * 60 + 30, 0.5);
+  bar(u, 1130, 'Přízemí', 7 * 60 + 30, 22 * 60, 0.75);
+  rise('Sobota, neděle a svátky', PAD, 1340, 48, MUTED, seg(u, 1.7, 2.2), 0, { weight: 400, stretch: 'normal' });
+  rise('9:00–12:00 · 14:00–21:00', PAD, 1410, 56, FG, seg(u, 1.85, 2.4), 0, { weight: 600, stretch: 'normal' });
+}
+
+function outro(t) {
+  const u = t - 25.05;
+  if (u < 0) return;
+  const s = fitSize('REZERVACE', CW, 900, 'condensed', 320);
+  rise('REZERVACE', PAD, 900, s, FG, seg(u, 0.1, 0.75));
+  rise('ONLINE', PAD, 900 + s * 0.9, s, ACC, seg(u, 0.22, 0.87));
+  rise('okgym.cz', PAD, 1280, 76, FG, seg(u, 0.7, 1.3), 0, { weight: 700, stretch: 'normal' });
+  rise('Hůrka 1832, Pardubice – Dubina', PAD, 1356, 44, MUTED, seg(u, 0.85, 1.45), 0, { weight: 400, stretch: 'normal' });
+}
+
+function render(t) {
+  x.fillStyle = BG; x.fillRect(0, 0, W, H);
+  if (t < 3.3) intro(t);
+  if (t >= 3.1 && t < 10.35) words(t);
+  if (t >= 10.35 && t < 19.9) activities(t);
+  if (t >= 19.5 && t < 25.05) hours(t);
+  if (t >= 25.05) outro(t);
+  wipe(t, 10.0);
+  wipe(t, 24.7);
+}
+
+/* ---------- Play live, show one frame (?t=12.5), or export every frame (?export) ---------- */
+const q = new URLSearchParams(location.search);
+const status = document.getElementById('status');
+document.fonts.load('900 100px Archivo').then(() => document.fonts.ready).then(async () => {
+  if (q.has('t')) { render(+q.get('t')); return; }
+  if (q.has('export')) {
+    for (let i = 0; i < DUR * FPS; i++) {
+      render(i / FPS);
+      const blob = await new Promise((r) => c.toBlob(r, 'image/png'));
+      await fetch(`/frame/${i}`, { method: 'POST', body: blob });
+      status.textContent = `${i + 1} / ${DUR * FPS}`;
+    }
+    const res = await fetch('/done', { method: 'POST' });
+    status.textContent = await res.text();
+    return;
+  }
+  const t0 = performance.now();
+  const loop = () => { render(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); };
+  loop();
+});
+</script>
+</body>
+</html>
