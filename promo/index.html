@@ -252,7 +252,7 @@ Promise.all([
   document.fonts.load('900 100px Archivo').then(() => document.fonts.ready),
 ]).then(async ([timing]) => {
   S = timing.scenes;
-  DUR = Math.ceil(timing.duration + VOICE_AT + 2.2);
+  DUR = Math.ceil(timing.duration + VOICE_AT + 1.7);
   buildCues();
   if (q.has('t')) { render(+q.get('t')); return; }
   if (q.has('export')) {

@@ -1,6 +1,6 @@
 """Voice-over and sound effects for the OK GYM promo, from ElevenLabs.
 
-  python promo/audio.py [--force]   → promo/voice.mp3, promo/timing.json, promo/sfx/<name>.mp3
+  python promo/audio.py [--force]   → promo/voice_raw.mp3, promo/timing_raw.json, promo/sfx/<name>.mp3
 
 The API key is read from the TikTok project's elevenlabs.env (never printed or copied).
 timing.json holds the start and end of every scene and word, so the animation follows the voice.
@@ -15,23 +15,28 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 KEY_FILE = Path.home() / "Documents/VIRAL_VOID_THE_HOST/tiktok-promo/series/elevenlabs.env"
 VOICE_ID = "nPczCjzI2devNBz1zQrb"
-MODEL = "eleven_multilingual_v2"
+# Eleven v3 is the expressive model: [tags] steer the delivery and are not spoken
+MODEL = "eleven_v3"
 
 SCENES = [
-    ("hook", "Posilovna, box, lezení, lekce, sauny, masáže, solárium."),
-    ("roof", "Všechno pod jednou střechou."),
-    ("logo", "Ókej džym Pardubice."),
-    ("tag", "Trénink, adrenalin, regenerace."),
-    ("f0", "Osm set metrů posilovny."),
+    ("hook", "[excited] Posilovna, box, lezení, lekce, sauny, masáže, solárium!"),
+    ("roof", "[confident] Všechno pod jednou střechou."),
+    ("logo", "[shouting] Ókej džym Pardubice!"),
+    ("tag", "[energetic] Trénink! Adrenalin! Regenerace!"),
+    ("f0", "[excited] Osm set metrů posilovny."),
     ("f1", "Box s profesionálním ringem."),
-    ("f2", "Osmimetrová lezecká stěna."),
+    ("f2", "Osmimetrová lezecká stěna!"),
     ("f3", "Lekce od bungee po jógu."),
-    ("f4", "Finská i bio sauna."),
+    ("f4", "[warmly] Finská i bio sauna."),
     ("f5", "Masáže po tréninku."),
-    ("f6", "A solárium."),
-    ("hours", "Otevřeno každý den."),
-    ("cta", "Rezervuj online na ókej džym tečka cé zet."),
+    ("f6", "[playfully] A solárium."),
+    ("hours", "[confident] Otevřeno každý den."),
+    ("cta", "[excited] Rezervuj online na ókej džym tečka cé zet!"),
 ]
+is_tag = lambda w: w.startswith("[") and w.endswith("]")
+
+MUSIC = ("Energetic modern gym workout promo beat, punchy trap drums, deep 808 bass, driving 140 bpm, "
+         "hype sports trailer energy, instrumental, no vocals")
 
 SFX = {
     "hit": ("Punchy short cinematic hit, tight kick drum with sub bass thump, sports promo, no music", 0.5),
@@ -61,16 +66,15 @@ def post(url: str, body: dict) -> bytes:
 
 
 def voice() -> None:
-    if (HERE / "timing.json").exists() and "--force" not in sys.argv:
+    if (HERE / "timing_raw.json").exists() and "--force" not in sys.argv:
         print("voice already there")
         return
     text = " ".join(t for _, t in SCENES)
     res = json.loads(post(
         f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}/with-timestamps?output_format=mp3_44100_128",
         {"text": text, "model_id": MODEL,
-         "voice_settings": {"stability": 0.38, "similarity_boost": 0.8, "style": 0.45,
-                            "use_speaker_boost": True, "speed": 1.15}}))
-    (HERE / "voice.mp3").write_bytes(base64.b64decode(res["audio_base64"]))
+         "voice_settings": {"stability": 0.0, "similarity_boost": 0.8, "use_speaker_boost": True}}))
+    (HERE / "voice_raw.mp3").write_bytes(base64.b64decode(res["audio_base64"]))
     al = res["alignment"]
     words, cur, t0, prev = [], "", None, 0.0
     for ch, a, b in zip(al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"]):
@@ -84,14 +88,15 @@ def voice() -> None:
         prev = b
     if cur:
         words.append({"w": cur, "t": t0, "e": prev})
+    words = [w for w in words if not is_tag(w["w"])]
     scenes, i = {}, 0
     for sid, text in SCENES:
-        n = len(text.split())
+        n = len([w for w in text.split() if not is_tag(w)])
         part = words[i:i + n]
         scenes[sid] = {"t": part[0]["t"], "e": part[-1]["e"], "words": part}
         i += n
     dur = al["character_end_times_seconds"][-1]
-    (HERE / "timing.json").write_text(json.dumps({"duration": dur, "scenes": scenes}, ensure_ascii=False, indent=1),
+    (HERE / "timing_raw.json").write_text(json.dumps({"duration": dur, "scenes": scenes}, ensure_ascii=False, indent=1),
                                       encoding="utf-8")
     print(f"voice: {dur:.1f} s, {len(words)} words")
 
@@ -108,6 +113,17 @@ def sfx() -> None:
         print(f"{name}: {f.stat().st_size // 1024} kB")
 
 
+def music() -> None:
+    f = HERE / "music.mp3"
+    if f.exists() and "--force" not in sys.argv:
+        return
+    dur = json.loads((HERE / "timing_raw.json").read_text(encoding="utf-8"))["duration"]
+    f.write_bytes(post("https://api.elevenlabs.io/v1/music?output_format=mp3_44100_128",
+                       {"prompt": MUSIC, "music_length_ms": int((dur + 3) * 1000), "force_instrumental": True}))
+    print(f"music: {f.stat().st_size // 1024} kB")
+
+
 if __name__ == "__main__":
     voice()
     sfx()
+    music()

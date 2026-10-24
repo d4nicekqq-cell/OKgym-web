@@ -30,13 +30,21 @@ const run = (args) => new Promise((resolve) => {
 
 // One ffmpeg pass: frames as video, the voice delayed by voiceAt, every cue delayed to its time
 function encode({ frames: n, voiceAt, cues }) {
-  const args = ['-y', '-framerate', '30', '-i', join(frames, '%04d.png'), '-i', join(dir, 'voice.mp3')];
+  const dur = n / 30;
+  const args = ['-y', '-framerate', '30', '-i', join(frames, '%04d.png'), '-i', join(dir, 'voice.mp3'),
+    '-stream_loop', '-1', '-i', join(dir, 'sfx', 'beat.mp3')];
   cues.forEach((c) => args.push('-i', join(dir, 'sfx', `${c.name}.mp3`)));
   const ms = (s) => Math.round(s * 1000);
-  const parts = [`[1:a]adelay=${ms(voiceAt)}:all=1,volume=1.0[v]`];
-  cues.forEach((c, i) => parts.push(`[${i + 2}:a]adelay=${ms(c.t)}:all=1,volume=${(0.5 * c.gain).toFixed(2)}[s${i}]`));
-  const inputs = ['[v]', ...cues.map((_, i) => `[s${i}]`)].join('');
-  parts.push(`${inputs}amix=inputs=${cues.length + 1}:normalize=0:dropout_transition=0,alimiter=limit=0.9,apad[a]`);
+  // Background beat loops under everything, ducks while the voice speaks and fades out at the end
+  const parts = [
+    `[1:a]adelay=${ms(voiceAt)}:all=1,volume=1.0,asplit=2[v][k0]`,
+    `[k0]apad[key]`,
+    `[2:a]atrim=0:${dur},volume=0.42,afade=t=in:d=0.3,afade=t=out:st=${dur - 1.2}:d=1.2[bed]`,
+    `[bed][key]sidechaincompress=threshold=0.04:ratio=5:attack=15:release=250[duck]`,
+  ];
+  cues.forEach((c, i) => parts.push(`[${i + 3}:a]adelay=${ms(c.t)}:all=1,volume=${(0.5 * c.gain).toFixed(2)}[s${i}]`));
+  const inputs = ['[v]', '[duck]', ...cues.map((_, i) => `[s${i}]`)].join('');
+  parts.push(`${inputs}amix=inputs=${cues.length + 2}:normalize=0:dropout_transition=0,alimiter=limit=0.9,apad[a]`);
   args.push('-filter_complex', parts.join(';'), '-map', '0:v', '-map', '[a]',
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-pix_fmt', 'yuv420p', '-profile:v', 'high',
     '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-t', `${n / 30}`, '-movflags', '+faststart', output);
