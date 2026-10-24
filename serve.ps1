@@ -9,7 +9,12 @@ Write-Host "Serving $root at http://localhost:$Port/"
 while ($listener.IsListening) {
   $ctx = $listener.GetContext()
   $rel = [Uri]::UnescapeDataString($ctx.Request.Url.AbsolutePath).Trim('/')
-  if (-not $rel) { $rel = 'index.html' }
+  # The bare address opens the version that is live on Vercel (verze-2/)
+  if (-not $rel) {
+    $ctx.Response.Redirect("http://localhost:$Port/verze-2/index.html")
+    $ctx.Response.Close()
+    continue
+  }
   $path = $null
   foreach ($candidate in @($rel, "$rel.html")) {
     $full = [IO.Path]::GetFullPath((Join-Path $root $candidate))
