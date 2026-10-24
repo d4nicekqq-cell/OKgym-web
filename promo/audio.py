@@ -30,7 +30,7 @@ SCENES = [
     ("f5", "Masáže po tréninku."),
     ("f6", "A solárium."),
     ("hours", "Otevřeno každý den."),
-    ("cta", "Rezervuj online na okgym tečka cz."),
+    ("cta", "Rezervuj online na ókej džym tečka cé zet."),
 ]
 
 SFX = {
